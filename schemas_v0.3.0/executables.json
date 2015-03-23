@@ -1,0 +1,25 @@
+{
+    "$schema":              "http://json-schema.org/draft-04/schema#",
+    "title":                "biopet_executables_schema",
+    "description":          "Schema for executables information in biopet summary JSON files",
+    "type":                 "object",
+    "properties": {
+        "executables": {
+            "type": "object",
+            "properties": {
+                "additionalProperties": { "$ref": "#/definitions/executableEntry" }
+            }
+        }
+    },
+    "definitions": {
+        "executableEntry": {
+            "properties": {
+                "version":  { "type": ["string", null] },
+                "md5":      { "type": "string" },
+                "jar_md5":  { "type": "string" },
+                "java_md5": { "type": "string" }
+            },
+            "required": ["version"]
+        }
+    }
+}
