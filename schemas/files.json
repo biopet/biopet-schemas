@@ -1,0 +1,25 @@
+{
+    "$schema":              "http://json-schema.org/draft-04/schema#",
+    "title":                "biopet_files_schema",
+    "description":          "Schema for files information in biopet summary JSON files",
+    "type":                 "object",
+    "properties": {
+        "files": {
+            "type": "object",
+            "properties": {
+                "additionalProperties": { "$ref": "#/definitions/fileEntry" }
+            }
+        }
+    },
+    "definitions": {
+        "fileEntry": {
+            "properties": {
+                "path":   { "type": "string" },
+                "md5":    { "type": "string" },
+                "sha1":   { "type": "string" },
+                "sha256": { "type": "string" }
+            },
+            "required": ["path"]
+        }
+    }
+}
