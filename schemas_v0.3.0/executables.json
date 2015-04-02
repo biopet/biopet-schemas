@@ -1,25 +1,45 @@
 {
     "$schema":              "http://json-schema.org/draft-04/schema#",
-    "title":                "biopet_executables_schema",
+    "title":                "Biopet Executables",
     "description":          "Schema for executables information in biopet summary JSON files",
+
     "type":                 "object",
-    "properties": {
-        "executables": {
-            "type": "object",
-            "properties": {
-                "additionalProperties": { "$ref": "#/definitions/executableEntry" }
-            }
-        }
-    },
+
+    "additionalProperties": { "$ref": "#/definitions/executableEntry" },
+
     "definitions": {
+
         "executableEntry": {
+            "description": "Entry for storing executable information",
+
+            "type": "object",
+
             "properties": {
-                "version":  { "type": ["string", null] },
-                "md5":      { "type": "string" },
-                "jar_md5":  { "type": "string" },
-                "java_md5": { "type": "string" }
+
+                "version":  {
+                    "description": "Version of the executable, null if not available",
+                    "type": ["string", "null"]
+                },
+
+                "md5": {
+                    "description": "MD5 checksum of the executable",
+                    "type": "string"
+                },
+
+                "jar_md5": {
+                    "description": "MD5 checksum of the JAR (only for JAR-packaged tools)",
+                    "type": ["string", "null"]
+                },
+
+                "java_md5": {
+                    "description": "MD5 checksum of the java executable (only for JAR-packaged tools)",
+                    "type": ["string", "null"]
+                }
             },
-            "required": ["version"]
+
+            "required": ["version"],
+
+            "additionalProperties": false
         }
     }
 }
