@@ -151,6 +151,8 @@
                 "fastqc_R2_qc": { "$ref": "#/definitions/statsFastqc" },
                 "clipping_R1": { "$ref": "#/definitions/statsCutadapt" },
                 "clipping_R2": { "$ref": "#/definitions/statsCutadapt" },
+                "trimming_R1": { "$ref": "#/definitions/statsSickle" },
+                "trimming_R2": { "$ref": "#/definitions/statsSickle" },
 
                 "fastq_sync": {
                   "description": "Statistics for read syncing, after clipping",
@@ -165,7 +167,7 @@
                 },
 
                 "trimming": {
-                  "description": "Statistics for base-quality trimming, based on sickle results",
+                  "description": "Statistics for base-quality trimming, based on sickle results. Found in version 0.4.0 or earlier.",
                   "type": "object",
                   "required": [ "num_reads_discarded_total", "num_reads_kept" ],
                   "additionalProperties": false,
@@ -474,6 +476,17 @@
             }
           }
         }
+      }
+    },
+
+    "statsSickle": {
+      "description": "Statistics for base-quality trimming, based on sickle results. Found in version 0.5.0 or higher.",
+      "type": "object",
+      "required": [ "num_reads_kept", "num_reads_discarded_total" ],
+
+      "properties": {
+        "num_reads_kept": { "type": "integer" },
+        "num_reads_discarded_total": { "type": "integer" }
       }
     }
   }
