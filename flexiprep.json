@@ -464,11 +464,9 @@
                       "type": "string"
                     },
                     "count": {
-                      "count": {
-                        "description": "How many times the adapter is clipped.",
-                        "type": "integer",
-                        "format": "int32"
-                      }
+                      "description": "How many times the adapter is clipped.",
+                      "type": "integer",
+                      "format": "int32"
                     }
                   }
                 }
