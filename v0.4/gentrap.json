@@ -320,7 +320,6 @@
                 "seqstat_R1": { "$ref": "#/definitions/statsSeqstat" },
                 "seqstat_R2": { "$ref": "#/definitions/statsSeqstat" },
                 "seqstat_R1_qc": { "$ref": "#/definitions/statsSeqstat" },
-                "seqstat_R1_qc": { "$ref": "#/definitions/statsSeqstat" },
                 "fastqc_R1": { "$ref": "#/definitions/statsFastqc" },
                 "fastqc_R2": { "$ref": "#/definitions/statsFastqc" },
                 "fastqc_R1_qc": { "$ref": "#/definitions/statsFastqc" },
@@ -595,11 +594,6 @@
 
         "java_version": {
           "description": "Version of the java executable used to execute the JAR",
-          "type": ["string", "null"]
-        },
-
-        "java_md5": {
-          "description": "MD5 checksum of the java executable",
           "type": ["string", "null"]
         },
 
