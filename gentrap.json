@@ -27,8 +27,7 @@
 
           "pipeline_name": {
             "description": "Name of the pipeline that created the summary file",
-            "type": "string",
-            "enum": [ "gentrap" ]
+            "type": "string"
           },
 
           "run_name": {
