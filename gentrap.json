@@ -295,7 +295,7 @@
 
                 "numberChunks": {
                   "description": "If chungking is enabled, the number of FASTQ chunks",
-                  "type": "integer"
+                  "type": [ "null", "integer" ]
                 },
 
                 "skip_flexipep": {
