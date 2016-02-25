@@ -331,7 +331,7 @@
         "reads": {
           "description": "Read-level statistics",
           "type": "object",
-          "required": [ "len_max", "len_min", "num_with_n", "num_total", "num_avg_qual_gte", "qual_encoding" ],
+          "required": [ "len_max", "len_min", "num_with_n", "num_total", "num_avg_qual_gte", "qual_encoding", "len_histogram" ],
 
           "properties": {
 
@@ -369,6 +369,16 @@
               "description": "Quality encoding; which can be sanger (ASCII offset 33), solexa, or illumina (both with ASCII offset 64)",
               "type": "string",
               "enum": [ "sanger", "illumina", "solexa" ]
+            },
+
+            "len_histogram": {
+              "description": "Holds the histogram of all read lengths found in the fastq file",
+              "type": "object",
+              "additionalProperties": false,
+
+              "patternProperties": {
+                "^[0-9]+$": { "type": "integer" }
+              }
             }
           }
         }
