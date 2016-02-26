@@ -357,12 +357,8 @@
 
             "num_avg_qual_gte": {
               "description": "Number of reads with quality greater than a certain number",
-              "type": "object",
-              "additionalProperties": false,
-
-              "patternProperties": {
-                "^[0-9]+$": { "type": "integer" }
-              }
+              "type": "array",
+              "items": { "type": "integer" }
             },
 
             "qual_encoding": {
