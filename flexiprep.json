@@ -357,8 +357,12 @@
 
             "num_avg_qual_gte": {
               "description": "Number of reads with quality greater than a certain number",
-              "type": "array",
-              "items": { "type": "integer" }
+              "type": "object",
+              "additionalProperties": false,
+
+              "patternProperties": {
+                "^[0-9]+$": { "type": "integer" }
+              }
             },
 
             "qual_encoding": {
@@ -369,12 +373,8 @@
 
             "len_histogram": {
               "description": "Holds the histogram of all read lengths found in the fastq file",
-              "type": "object",
-              "additionalProperties": false,
-
-              "patternProperties": {
-                "^[0-9]+$": { "type": "integer" }
-              }
+              "type": "array",
+              "items": { "type": "integer" }
             }
           }
         }
