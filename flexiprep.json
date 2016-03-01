@@ -373,12 +373,8 @@
 
             "len_histogram": {
               "description": "Holds the histogram of all read lengths found in the fastq file",
-              "type": "object",
-              "additionalProperties": false,
-
-              "patternProperties": {
-                "^[0-9]+$": { "type": "integer" }
-              }
+              "type": "array",
+              "items": { "type": "integer" }
             }
           }
         }
