@@ -251,13 +251,24 @@
               "required": [ "pipeline" ],
 
               "properties": {
-
-                "pipeline": {
-                  "description": "Initial input files and final output files in Mapping",
-                  "type": "object",
-                  "required": [ "input_R1", "output_bamfile" ],
-                  "additionalProperties": { "$ref": "#/definitions/file" }
-                }
+                "oneOf": [
+                  {
+                    "pipeline": {
+                      "description": "Initial input files and final output files in Mapping",
+                      "type": "object",
+                      "required": [ "input_R1", "output_bamfile" ],
+                      "additionalProperties": { "$ref": "#/definitions/file" }
+                    }
+                  },
+                  {
+                    "pipeline": {
+                      "description": "Initial input files and final output files in Mapping",
+                      "type": "object",
+                      "required": [ "input_R1", "output_bam" ],
+                      "additionalProperties": { "$ref": "#/definitions/file" }
+                    }
+                  }
+                ]
               },
               "additionalProperties": { "$ref": "#/definitions/fileGroup" }
             },
