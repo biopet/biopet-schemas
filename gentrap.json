@@ -98,7 +98,8 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "FragmentsPerGene", "FragmentsPerExon", "BasesPerGene", "BasesPerExon",
+                    "FragmentsPerGene", "FragmentsPerExon",
+                    "BasesPerGene", "BasesPerExon", "BaseCounts",
                     "CufflinksStrict", "CufflinksGuided", "CufflinksBlind"
                   ]
                 }
