@@ -81,7 +81,7 @@
             "description": "Settings used for the Gentrap run",
             "type": "object",
             "required": [
-              "aligner", "call_variants", "remove_ribosomal_reads",
+              "call_variants", "remove_ribosomal_reads",
               "expression_measures", "strand_protocol", "reference"
             ],
 
