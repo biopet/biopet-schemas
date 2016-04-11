@@ -11,6 +11,8 @@
       "description": "Pipeline run metadata",
       "type": "object",
 
+      "required": ["pipeline_version", "last_commit_hash", "pipeline_name"],
+
       "properties": {
 
         "pipeline_version": {
@@ -33,6 +35,16 @@
         "run_name": {
           "description": "User-supplied name of the pipeline run",
           "type": "string"
+        },
+
+        "output_dir": {
+          "description": "Path to output directory of run"
+          "type": "string"
+        },
+
+        "summary_creation": {
+          "description": "Time of summary creation in Unix time",
+          "type": "number"
         }
       }
     },
