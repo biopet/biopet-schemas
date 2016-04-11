@@ -6,13 +6,54 @@
   "required": ["samples", "shiva"],
 
   "properties": {
+
     "meta": {
-      "type": "object"
+      "description": "Pipeline run metadata",
+      "type": "object",
+
+      "properties": {
+
+        "pipeline_version": {
+          "description": "Version of the pipeline",
+          "type": "string"
+        },
+
+        "last_commit_hash": {
+          "description": "Commit hash of the source code repository at the time the pipeline was compiled",
+          "type": "string",
+          "minLength": 7
+        },
+
+        "pipeline_name": {
+          "description": "Name of the pipeline",
+          "type": "string",
+          "enum": ["shiva", "shivavariantcalling"]
+        },
+
+        "run_name": {
+          "description": "User-supplied name of the pipeline run",
+          "type": "string"
+        }
+      }
     },
+
     "samples": {
-      "type": "object"
+      "description": "All samples analyzed in the Shiva run",
+      "type": "object",
+      "minItems": 1,
+      "additionalProperties": {"$ref": "#/definitions/sample"}
     },
+
     "shiva": {
+      "description": "Pipeline-level Shiva information",
+      "type": "object"
+    }
+  },
+
+  "definitions": {
+
+    "sample": {
+      "description": "A shiva sample",
       "type": "object"
     }
   }
