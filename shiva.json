@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Shiva Pipeline Summary",
+  "description": "Schema for full Shiva pipeline runs",
+  "type": "object",
+  "required": ["samples", "shiva"],
+
+  "properties": {
+    "meta": {
+      "type": "object"
+    },
+    "samples": {
+      "type": "object"
+    },
+    "shiva": {
+      "type": "object"
+    }
+  }
+}
