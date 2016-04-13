@@ -38,7 +38,7 @@
         },
 
         "output_dir": {
-          "description": "Path to output directory of run"
+          "description": "Path to output directory of run",
           "type": "string"
         },
 
@@ -63,7 +63,7 @@
 
     "shivavariantcalling": {
       "description": "Variant calling results",
-      "type": "object",
+      "type": "object"
     },
 
     "shiva": {
@@ -85,7 +85,8 @@
           "additionalProperties": {
             "oneOf": [
               {"$ref": "#/definitions/executable"},
-              {"$ref": "#/definitions/java_executable"}
+              {"$ref": "#/definitions/java_executable"},
+              {"$ref": "#/definitions/gatk_executable"}
             ]
           }
         },
@@ -133,7 +134,7 @@
             },
 
             "annotation": {
-              "description": "Whether annotation was used".
+              "description": "Whether annotation was used",
               "type": "boolean"
             },
 
@@ -180,10 +181,23 @@
 
         "md5": {
           "description": "The md5 checksum of the executable",
-          "type": "string",
-          "minLength": 32,
-          "maxLength": 32,
-          "pattern": "^[a-f0-9]{32}$"
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/md5"}
+          ]
+        }
+      }
+    },
+
+    "gatk_executable": {
+      "description": "GATK tools only have a version?",
+      "type": "object",
+      "required": ["version"],
+      "additionalProperties": false,
+
+      "properties": {
+        "version": {
+          "type": "string"
         }
       }
     },
@@ -198,10 +212,10 @@
 
         "java_md5": {
           "description": "The md5 checksum of the JVM",
-          "type": "string",
-          "minLength": 32,
-          "maxLength": 32,
-          "pattern": "^[a-f0-9]{32}$"
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/md5"}
+          ]
         },
 
         "jar_path": {
@@ -214,7 +228,7 @@
           "type": ["string", "null"]
         },
 
-        "java version": {
+        "java_version": {
           "description": "Version of the JVM",
           "type": ["string", "null"]
         }
@@ -242,6 +256,12 @@
           "pattern": "^[a-f0-9]{32}$"
         }
       }
+    },
+    "md5": {
+      "type": "string",
+      "minLength": 32,
+      "maxLength": 32,
+      "pattern": "^[a-f0-9]{32}$"
     }
   }
 }
