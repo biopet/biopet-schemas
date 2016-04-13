@@ -3,7 +3,7 @@
   "title": "Shiva Pipeline Summary",
   "description": "Schema for full Shiva pipeline runs",
   "type": "object",
-  "required": ["samples", "shiva"],
+  "required": ["samples", "shiva", "shivavariantcalling", "meta"],
 
   "properties": {
 
@@ -54,6 +54,16 @@
       "type": "object",
       "minItems": 1,
       "additionalProperties": {"$ref": "#/definitions/sample"}
+    },
+
+    "toucan": {
+      "description": "toucan results (optional)",
+      "type": "object"
+    },
+
+    "shivavariantcalling": {
+      "description": "Variant calling results",
+      "type": "object",
     },
 
     "shiva": {
