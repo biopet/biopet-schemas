@@ -317,10 +317,10 @@
                 "fastq_sync": {"type": "object"},
                 "trimming_R1": {"type": "object"},
                 "trimming_R2": {"type": "object"},
-                "seqstat_R1": {"type": "object"},
-                "seqstat_R2": {"type": "object"},
-                "seqstat_R1_qc": {"type": "object"},
-                "seqstat_R2_qc": {"type": "object"}
+                "seqstat_R1": {"$ref": "#/definitions/seqstat"},
+                "seqstat_R2": {"$ref": "#/definitions/seqstat"},
+                "seqstat_R1_qc": {"$ref": "#/definitions/seqstat"},
+                "seqstat_R2_qc": {"$ref": "#/definitions/seqstat"}
               }
             }
           }
@@ -381,6 +381,55 @@
             }
           }
         }
+      }
+    },
+
+    "seqstat": {
+      "type": "object",
+
+      "required": ["reads", "bases"],
+
+      "properties": {
+
+        "reads": {
+          "type": "object",
+          "required": ["qual_encoding", "len_histogram", "num_avg_qual_gte", "num_with_n", "num_total", "len_max"],
+          "properties": {
+            "qual_encoding": {"type": "string"},
+            "len_histogram": {"type": "array", "items": {"type": "number"}},
+            "num_with_n": {"type": "number"},
+            "num_total": {"type": "number"},
+            "len_max": {"type": "number"},
+            "num_avg_qual_gte": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "type": "number"
+              }
+            }
+          }
+        },
+
+        "bases": {
+          "type": "object",
+          "required": ["num_qual", "nucleotides", "num_total"],
+
+          "properties": {
+            "num_total": {"type": "number"},
+            "num_qual": {"type": "array", "items": {"type": "number"}},
+            "nucleotides": {
+              "type": "object",
+              "required": ["A", "C", "T", "G"],
+              "properties": {
+                "A": {"type": "number"},
+                "C": {"type": "number"},
+                "T": {"type": "number"},
+                "G": {"type": "number"}
+              }
+            }
+          }
+        }
+
       }
     },
 
