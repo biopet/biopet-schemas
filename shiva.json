@@ -58,7 +58,27 @@
 
     "shiva": {
       "description": "Pipeline-level Shiva information",
-      "type": "object"
+      "type": "object",
+
+      "properties": {
+
+        "files": {
+          "description": "Reference files used",
+          "type": "object"
+        },
+
+        "executables": {
+          "description": "Executables used",
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {"$ref": "#/definitions/executable"},
+              {"$ref": "#/definitions/java_executable"}
+            ]
+          }
+        }
+      }
+
     }
   },
 
@@ -73,6 +93,7 @@
       "description": "A regular (i.e. non-java) executable",
       "type": "object",
       "required": ["path", "version", "md5"],
+      "additionalProperties": false,
 
       "properties": {
 
@@ -98,7 +119,35 @@
 
     "java_executable": {
       "description": "A java executable",
-      "type": "object"
+      "type": "object",
+      "required": ["java_md5", "jar_path", "version", "java_version"],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "java_md5": {
+          "description": "The md5 checksum of the JVM",
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 32,
+          "pattern": "^[a-f0-9]{32}$"
+        },
+
+        "jar_path": {
+          "description": "Path to the JAR",
+          "type": ["string", "null"]
+        },
+
+        "version": {
+          "description": "Version of the used JAR",
+          "type": ["string", "null"]
+        },
+
+        "java version": {
+          "description": "Version of the JVM",
+          "type": ["string", "nu;;"]
+        }
+      }
     }
   }
 }
