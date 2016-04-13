@@ -310,33 +310,17 @@
 
               "properties": {
 
-                "fastqc_R1": {
-                  "type": "object"
-                },
-
-                "fastqc_R2": {
-                  "type": "object"
-                },
-
-                "fastqc_R1_qc": {
-                  "type": "object"
-                },
-
-                "fastqc_R2_qc": {
-                  "type": "object"
-                },
-
-                "fastq_sync": {
-                  "type": "object"
-                },
-
-                "trimming_R1": {
-                  "type": "object"
-                },
-
-                "trimming_R2": {
-                  "type": "object"
-                }
+                "fastqc_R1": {"$ref": "#/definitions/fastqc"},
+                "fastqc_R2": {"$ref": "#/definitions/fastqc"},
+                "fastqc_R1_qc": {"$ref": "#/definitions/fastqc"},
+                "fastqc_R2_qc": {"$ref": "#/definitions/fastqc"},
+                "fastq_sync": {"type": "object"},
+                "trimming_R1": {"type": "object"},
+                "trimming_R2": {"type": "object"},
+                "seqstat_R1": {"type": "object"},
+                "seqstat_R2": {"type": "object"},
+                "seqstat_R1_qc": {"type": "object"},
+                "seqstat_R2_qc": {"type": "object"}
               }
             }
           }
@@ -352,6 +336,50 @@
 
         "shiva": {
           "type": "object"
+        }
+      }
+    },
+
+    "fastqc": {
+      "description": "fastqc stats",
+      "type": "object",
+
+      "properties": {
+
+        "per_base_sequence_quality": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["lower_quartile", "upper_quartile", "median", "mean", "percentile_10th", "percentile_90th"],
+            "properties": {
+              "lower_quartile": {"type": "number"},
+              "upper_quartile": {"type": "number"},
+              "median": {"type": "number"},
+              "mean": {"type": "number"},
+              "percentile_10th": {"type": "number"},
+              "percentile_90th": {"type": "number"}
+            }
+          }
+        },
+
+        "adapters": {
+          "type": "object"
+        },
+
+        "per_base_sequence_content": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["A", "C", "T", "G"],
+            "properties": {
+              "A": {"type": "number"},
+              "C": {"type": "number"},
+              "T": {"type": "number"},
+              "G": {"type": "number"}
+            }
+          }
         }
       }
     },
