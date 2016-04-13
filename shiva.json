@@ -158,7 +158,31 @@
 
     "sample": {
       "description": "A shiva sample",
-      "type": "object"
+      "type": "object",
+      "required": ["libraries", "shiva", "bammetrics", "shivavariantcalling"],
+
+      "properties": {
+
+        "libraries": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "$ref": "#/definitions/library"
+          }
+        },
+
+        "shiva": {
+          "type": "object"
+        },
+
+        "bammetrics": {
+          "type": "object"
+        },
+
+        "shivavariantcalling": {
+          "type": "object"
+        }
+      }
     },
 
     "executable": {
@@ -235,6 +259,103 @@
       }
     },
 
+    "library": {
+      "description": "A sequence read group",
+      "type": "object",
+      "required": ["flexiprep", "mapping", "bammetrics", "shiva"],
+
+      "properties": {
+
+        "flexiprep": {
+          "type": "object",
+          "required": ["files", "executables", "settings", "stats"],
+
+          "properties": {
+
+            "files": {
+              "type": "object"
+            },
+
+            "executables": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "oneOf": [
+                  {"$ref": "#/definitions/executable"},
+                  {"$ref": "#/definitions/java_executable"},
+                  {"$ref": "#/definitions/gatk_executable"}
+                ]
+              }
+            },
+
+            "settings": {
+              "type": "object",
+              "required": ["paired", "skip_trim", "skip_clip"],
+
+              "properties": {
+                "paired": {
+                  "type": "boolean"
+                },
+                "skip_clip": {
+                  "type": "boolean"
+                },
+                "skip_trim": {
+                  "type": "boolean"
+                }
+              }
+            },
+
+            "stats": {
+              "type": "object",
+
+              "properties": {
+
+                "fastqc_R1": {
+                  "type": "object"
+                },
+
+                "fastqc_R2": {
+                  "type": "object"
+                },
+
+                "fastqc_R1_qc": {
+                  "type": "object"
+                },
+
+                "fastqc_R2_qc": {
+                  "type": "object"
+                },
+
+                "fastq_sync": {
+                  "type": "object"
+                },
+
+                "trimming_R1": {
+                  "type": "object"
+                },
+
+                "trimming_R2": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+
+        "mapping": {
+          "type": "object"
+        },
+
+        "bammetrics": {
+          "type": "object"
+        },
+
+        "shiva": {
+          "type": "object"
+        }
+      }
+    },
+
     "contig": {
       "description": "A contig",
       "type": "object",
@@ -250,10 +371,7 @@
 
         "md5": {
           "description": "The md5 checksum of the contig",
-          "type": "string",
-          "minLength": 32,
-          "maxLength": 32,
-          "pattern": "^[a-f0-9]{32}$"
+          "$ref": "#/definitions/md5"
         }
       }
     },
