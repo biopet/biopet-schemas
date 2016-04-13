@@ -59,6 +59,7 @@
     "shiva": {
       "description": "Pipeline-level Shiva information",
       "type": "object",
+      "required": ["files", "executables", "settings"],
 
       "properties": {
 
@@ -70,15 +71,75 @@
         "executables": {
           "description": "Executables used",
           "type": "object",
+          "minItems": 1,
           "additionalProperties": {
             "oneOf": [
               {"$ref": "#/definitions/executable"},
               {"$ref": "#/definitions/java_executable"}
             ]
           }
+        },
+
+        "settings": {
+          "description": "Settings used",
+          "type": "object",
+          "required": ["reference", "multisample_variantcalling", "sv_calling", "annotation"],
+
+          "properties": {
+
+            "reference": {
+              "description": "Info about the reference used",
+              "type": "object",
+              "required": ["contigs"],
+
+              "properties": {
+
+                "contigs": {
+                  "description": "The contigs used",
+                  "minItems": 1,
+                  "additionalProperties": {"$ref": "#/definitions/contig"}
+                },
+
+                "name": {
+                  "description": "name of the reference",
+                  "type": ["string", "null"]
+                },
+
+                "species": {
+                  "description": "The species of the reference",
+                  "type": ["string", "null"]
+                }
+              }
+            },
+
+            "multisample_variantcalling": {
+              "description": "Whether multi sample variant calling was used",
+              "type": "boolean"
+            },
+
+            "sv_calling": {
+              "description": "Whether SV calling was used",
+              "type": "boolean"
+            },
+
+            "annotation": {
+              "description": "Whether annotation was used".
+              "type": "boolean"
+            },
+
+            "regions_of_interest": {
+              "description": "list of ROIs",
+              "type": "array",
+              "minItems": 0
+            },
+
+            "amplicon_bed": {
+              "description": "Path to capture kit bed file",
+              "type": "string"
+            }
+          }
         }
       }
-
     }
   },
 
@@ -145,7 +206,30 @@
 
         "java version": {
           "description": "Version of the JVM",
-          "type": ["string", "nu;;"]
+          "type": ["string", "null"]
+        }
+      }
+    },
+
+    "contig": {
+      "description": "A contig",
+      "type": "object",
+      "required": ["length", "md5"],
+
+      "properties": {
+
+        "length": {
+          "description": "Length of the contig in bases",
+          "type": "number",
+          "minimum": 1
+        },
+
+        "md5": {
+          "description": "The md5 checksum of the contig",
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 32,
+          "pattern": "^[a-f0-9]{32}$"
         }
       }
     }
