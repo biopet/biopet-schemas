@@ -66,7 +66,12 @@
       "type": "object",
       "required": ["stats", "files", "executables", "settings"],
       "properties": {
-        "files": {"type": "object"},
+        "files": {
+          "type": "object",
+          "required": ["pipeline"],
+          "minItems": 1,
+          "additionalProperties": {"$ref": "#/definitions/fileGroup"}
+        },
         "executables": {
           "type": "object",
           "minItems": 1,
@@ -480,6 +485,13 @@
         "path": {"type": "string"},
         "md5": {"$ref": "#/definitions/md5"}
       }
+    },
+
+    "fileGroup": {
+      "description": "Entry for a group of files",
+      "type": "object",
+      "minItems": 1,
+      "additionalProperties": {"$ref": "#/definitions/file"}
     },
 
     "md5": {
