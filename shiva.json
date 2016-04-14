@@ -82,11 +82,14 @@
           "type": "object",
           "minItems": 1,
           "required": ["multisample-vcfstats-final"],
-          "additionalProperties": {
-            "oneOf": [
-              {"$ref": "#/definitions/vcfstats-genotype"},
-              {"$ref": "#/definitions/vcfstats-info"}
-            ]
+          "additionalProperties": false,
+          "patternProperties": {
+            "-vcfstats-": {
+              "oneOf": [
+                {"$ref": "#/definitions/vcfstats-genotype"},
+                {"$ref": "#/definitions/vcfstats-info"}
+              ]
+            }
           }
         },
         "settings": {
@@ -238,12 +241,14 @@
             "stats": {
               "type": "object",
               "minItems": 1,
-              "required": ["multisample-vcfstats-final"],
-              "additionalProperties": {
-                "oneOf": [
-                  {"$ref": "#/definitions/vcfstats-genotype"},
-                  {"$ref": "#/definitions/vcfstats-info"}
-                ]
+              "additionalProperties": false,
+              "patternProperties": {
+                "-vcfstats-": {
+                  "oneOf": [
+                    {"$ref": "#/definitions/vcfstats-genotype"},
+                    {"$ref": "#/definitions/vcfstats-info"}
+                  ]
+                }
               }
             }
           }
