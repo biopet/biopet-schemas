@@ -195,7 +195,47 @@
         },
 
         "shivavariantcalling": {
-          "type": "object"
+          "description": "Variant calling results for a sample",
+          "type": "object",
+          "required": ["stats"],
+          "properties": {
+            "stats": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "$ref": "#/definitions/vcfstats"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "vcfstats": {
+      "description": "Results of a VCF stats run",
+      "type": "object",
+      "required": ["genotype"],
+
+      "properties": {
+        "genotype": {
+          "type": "object",
+          "required": ["Available", "Het", "NoCall", "Hom", "HomRef", "NonInformative", "HomVar", "HetNonRef",
+          "Mixed", "Filtered", "Total", "Called"],
+
+          "properties": {
+            "Available": {"type": ["string", "number"]},
+            "Het": {"type": ["string", "number"]},
+            "NoCall": {"type": ["string", "number"]},
+            "Hom": {"type": ["string", "number"]},
+            "HomRef": {"type": ["string", "number"]},
+            "NonInformative": {"type": ["string", "number"]},
+            "HomVar": {"type": ["string", "number"]},
+            "HetNonRef": {"type": ["string", "number"]},
+            "Mixed": {"type": ["string", "number"]},
+            "Filtered": {"type": ["string", "number"]},
+            "Total": {"type": ["string", "number"]},
+            "Called": {"type": ["string", "number"]}
+          }
         }
       }
     },
