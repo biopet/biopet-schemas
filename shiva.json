@@ -215,7 +215,24 @@
           "required": ["files", "tags", "stats", "settings"],
 
           "properties": {
-            "files": {"type": "object"},
+            "files": {
+              "type": "object",
+              "required": ["pipeline"],
+
+              "properties": {
+                "pipeline": {
+                  "type": "object",
+
+                  "required": ["output_bam"],
+
+                  "properties": {
+                    "output_bam": {"$ref": "#/definitions/file"}
+                  },
+
+                  "additionalProperties": {"$ref": "#/definitions/file"}
+                }
+              }
+            },
             "tags": {"type": "object"},
             "stats": {"type": "object"},
             "settings": {
@@ -454,6 +471,17 @@
         }
       }
     },
+
+    "file": {
+      "description": "Entry for a file",
+      "required": ["path", "md5"],
+
+      "properties": {
+        "path": {"type": "string"},
+        "md5": {"$ref": "#/definitions/md5"}
+      }
+    },
+
     "md5": {
       "type": "string",
       "minLength": 32,
