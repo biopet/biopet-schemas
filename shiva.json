@@ -119,7 +119,9 @@
 
         "files": {
           "description": "Reference files used",
-          "type": "object"
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {"$ref": "#/definitions/fileGroup"}
         },
 
         "executables": {
