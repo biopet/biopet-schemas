@@ -62,8 +62,22 @@
     },
 
     "shivavariantcalling": {
-      "description": "Variant calling results",
-      "type": "object"
+      "description": "Variant calling results for a sample",
+      "type": "object",
+      "required": ["stats"],
+      "properties": {
+        "stats": {
+          "type": "object",
+          "minItems": 1,
+          "required": ["multisample-vcfstats-final"],
+          "additionalProperties": {
+            "oneOf": [
+              {"$ref": "#/definitions/vcfstats-genotype"},
+              {"$ref": "#/definitions/vcfstats-info"}
+            ]
+          }
+        }
+      }
     },
 
     "shiva": {
@@ -202,8 +216,12 @@
             "stats": {
               "type": "object",
               "minItems": 1,
+              "required": ["multisample-vcfstats-final"],
               "additionalProperties": {
-                "$ref": "#/definitions/vcfstats"
+                "oneOf": [
+                  {"$ref": "#/definitions/vcfstats-genotype"},
+                  {"$ref": "#/definitions/vcfstats-info"}
+                ]
               }
             }
           }
@@ -211,8 +229,8 @@
       }
     },
 
-    "vcfstats": {
-      "description": "Results of a VCF stats run",
+    "vcfstats-genotype": {
+      "description": "Results of a VCF stats run for genotypes",
       "type": "object",
       "required": ["genotype"],
 
@@ -236,6 +254,39 @@
             "Total": {"type": ["string", "number"]},
             "Called": {"type": ["string", "number"]}
           }
+        }
+      }
+    },
+
+    "vcfstats-info": {
+      "description": "Results of VcfStats on info fields",
+      "type": "object",
+      "required": ["info"],
+
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "ComplexIndel": {"type": "number"},
+            "SimpleInsertion": {"type": "number"},
+            "StructuralIndel": {"type": "number"},
+            "SNP": {"type": "number"},
+            "MNP": {"type": "number"},
+            "Variant": {"type": "number"},
+            "PointEvent": {"type": "number"},
+            "NotFiltered": {"type": "number"},
+            "MonomorphicInSamples": {"type": "number"},
+            "Symbolic": {"type": "number"},
+            "Indel": {"type": "number"},
+            "FullyDecoded": {"type": "number"},
+            "Mixed": {"type": "number"},
+            "Filtered": {"type": "number"},
+            "PolymorphicInSamples": {"type": "number"},
+            "Total": {"type": "number"},
+            "SymbolicOrSv": {"type": "number"},
+            "SimpleDeletion": {"type": "number"},
+            "Biallelic": {"type": "number"}
+         }
         }
       }
     },
