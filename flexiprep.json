@@ -104,9 +104,10 @@
               "description": "Executables used in Flexiprep",
               "type": "object",
               "additionalProperties": {
-                "anyOf": [
+                "oneOf": [
                   { "$ref": "#/definitions/executable" },
-                  { "$ref": "#/definitions/jar" }
+                  { "$ref": "#/definitions/jar" },
+                  {"$ref": "#/definitions/gatk_executable"}
                 ]
               }
             },
@@ -204,7 +205,7 @@
 
       "properties": {
 
-        "md5":    { "type": "string" },
+        "md5":    { "$ref": "#/definitions/md5" },
         "sha1":   { "type": "string" },
         "sha256": { "type": "string" },
 
@@ -230,31 +231,14 @@
 
         "md5": {
           "description": "MD5 checksum of the executable, null if not available",
-          "type": ["string", "null"]
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/md5"}
+          ]
         },
 
         "path": {
           "description": "Path to executable",
-          "type": ["string", "null"]
-        },
-
-        "jar_md5": {
-          "description": "MD5 checksum of the JAR (only for JAR-packaged tools)",
-          "type": ["string", "null"]
-        },
-
-        "java_md5": {
-          "description": "MD5 checksum of the java executable (only for JAR-packaged tools)",
-          "type": ["string", "null"]
-        },
-
-        "java_version": {
-          "description": "Version of the java executable used to execute the JAR",
-          "type": ["string", "null"]
-        },
-
-        "jar_path": {
-          "description": "Path to the JAR file (null if not available)",
           "type": ["string", "null"]
         }
       }
@@ -280,11 +264,29 @@
 
         "java_md5": {
           "description": "MD5 checksum of the java executable",
-          "type": ["string", "null"]
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/md5"}
+          ]
         },
 
         "jar_path": {
           "description": "Path to the JAR file (null if not available)",
+          "type": ["string", "null"]
+        }
+      }
+    },
+
+    "gatk_executable": {
+      "description": "Entry for storing tools from the GATK",
+      "type": "object",
+      "required": ["version"],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "version": {
+          "description": "The version string of the tool",
           "type": ["string", "null"]
         }
       }
@@ -494,6 +496,13 @@
         "num_reads_kept": { "type": "integer" },
         "num_reads_discarded_total": { "type": "integer" }
       }
+    },
+
+     "md5": {
+      "type": "string",
+      "minLength": 32,
+      "maxLength": 32,
+      "pattern": "^[a-f0-9]{32}$"
     }
   }
 }
