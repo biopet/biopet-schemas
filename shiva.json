@@ -64,8 +64,20 @@
     "shivavariantcalling": {
       "description": "Variant calling results for a sample",
       "type": "object",
-      "required": ["stats"],
+      "required": ["stats", "files", "executables", "settings"],
       "properties": {
+        "files": {"type": "object"},
+        "executables": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "oneOf": [
+              {"$ref": "#/definitions/executable"},
+              {"$ref": "#/definitions/java_executable"},
+              {"$ref": "#/definitions/gatk_executable"}
+            ]
+          }
+        },
         "stats": {
           "type": "object",
           "minItems": 1,
@@ -75,6 +87,16 @@
               {"$ref": "#/definitions/vcfstats-genotype"},
               {"$ref": "#/definitions/vcfstats-info"}
             ]
+          }
+        },
+        "settings": {
+          "type": "object",
+          "required": ["variantcallers", "regions_of_interest", "amplicon_bed"],
+
+          "properties": {
+            "variantcallers": {"type": "array", "items": {"type": "string"}},
+            "regions_of_interest": {"type": "array", "items": {"type": "string"}},
+            "amplicon_bed": {"type": "string"}
           }
         }
       }
