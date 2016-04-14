@@ -335,7 +335,25 @@
         },
 
         "shiva": {
-          "type": "object"
+          "type": "object",
+
+          "required": ["files", "tags", "stats", "settings"],
+
+          "properties": {
+
+            "files": {"type": "object"},
+            "tags": {"type": "object"},
+            "stats": {"type": "object"},
+            "settings": {
+              "type": "object",
+              "required": ["library_variantcalling", "use_indel_realigner", "use_base_recalibration"],
+              "properties": {
+                "library_variantcalling": {"type": "boolean"},
+                "use_indel_realigner": {"type": "boolean"},
+                "use_base_recalibration": {"type": "boolean"}
+              }
+            }
+          }
         }
       }
     },
