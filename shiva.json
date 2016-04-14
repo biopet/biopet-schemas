@@ -172,7 +172,22 @@
         },
 
         "shiva": {
-          "type": "object"
+          "type": "object",
+          "required": ["files", "tags", "stats", "settings"],
+
+          "properties": {
+            "files": {"type": "object"},
+            "tags": {"type": "object"},
+            "stats": {"type": "object"},
+            "settings": {
+              "type": "object",
+              "required": ["single_sample_variantcalling", "use_indel_realigner"],
+              "properties": {
+                "single_sample_variantcalling": {"type": "boolean"},
+                "use_indel_realigner": {"type": "boolean"}
+              }
+            }
+          }
         },
 
         "bammetrics": {
