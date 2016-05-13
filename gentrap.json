@@ -100,7 +100,8 @@
                   "enum": [
                     "FragmentsPerGene", "FragmentsPerExon",
                     "BasesPerGene", "BasesPerExon", "BaseCounts",
-                    "CufflinksStrict", "CufflinksGuided", "CufflinksBlind"
+                    "CufflinksStrict", "CufflinksGuided", "CufflinksBlind",
+                    "BiosBaseCounts"
                   ]
                 }
               },
