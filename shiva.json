@@ -416,6 +416,98 @@
       }
     },
 
+    "flexiprep_library": {
+      "description": "Flexiprep summary for a library",
+
+      "type": "object",
+      "required": ["files", "executables", "stats", "settings"],
+
+      "properties": {
+
+        "files": {
+          "description": "Set of files for this library",
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {"$ref": "#/definitions/file"},
+              {"$ref": "#/definitions/fileGroup"}
+            ]
+          }
+        },
+
+        "executables": {
+          "description": "Flexiprep executables for this library",
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {"$ref": "#/definitions/executable"},
+              {"$ref": "#/definitions/gatk_executable"},
+              {"$ref": "#/definitions/java_executable"}
+            ]
+          }
+        },
+
+        "stats": {
+          "description": "Flexiprep stats for this run",
+          "type": "object",
+
+          "required": [
+            "fastqc_R1",
+            "fastqc_R2",
+            "fastqc_R1_qc",
+            "fastqc_R2_qc"
+          ],
+
+          "properties": {
+            "trimming_R1": {"$ref": "#/definitions/flexiprep_trim"},
+            "trimming_R2": {"$ref": "#/definitions/flexiprep_trim"},
+            "fastq_sync": {
+              "type": "object",
+              "required": ["num_reads_discarded_R1", "num_reads_discarded_R2", "num_reads_kept"],
+
+              "properties": {
+                "num_reads_discarded_R1": {"type": "integer"},
+                "num_reads_discarded_R2": {"type": "integer"},
+                "num_reads_kept": {"type": "integer"}
+              }
+            }
+          }
+
+        },
+
+        "settings": {
+          "description": "Settings for flexiprep for this library",
+          "type": "object",
+
+          "required": ["paired", "skip_trim", "skip_clip"],
+
+          "properties": {
+            "paired": {"type": "boolean"},
+            "skip_trim": {"type": "boolean"},
+            "skip_clip": {"type": "boolean"}
+          }
+        }
+      }
+    },
+
+    "flexiprep_trim" :{
+      "description": "Trimming stats for a flexiprep report",
+      "type": "object",
+
+      "required": ["num_reads_kept", "num_reads_discarded_total"],
+      "properties": {
+        "num_reads_kept": {"type": "integer"},
+        "num_reads_discarded_total": {"type": "integer"}
+      }
+
+    },
+
+    "flexiprep_seqstat": {
+      "#TODO": "FINISH"
+    },
+
     "library": {
       "description": "A sequence read group",
       "type": "object",
