@@ -633,7 +633,75 @@
         "flexiprep": {"$ref": "#/definitions/flexiprep_library"},
 
         "mapping": {
-          "type": "object"
+          "type": "object",
+
+          "required": ["files", "executables", "stats", "settings"],
+
+          "properties": {
+            "files": {
+              "type": "object",
+              "minItems" : 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/file"},
+                  {"$ref": "#/definitions/fileGroup"}
+                ]
+              }
+            },
+
+            "executables": {
+              "type": "object",
+              "minItems" : 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/executable"},
+                  {"$ref": "#/definitions/gatk_executable"},
+                  {"$ref": "#/definitions/java_executable"}
+                ]
+              }
+            },
+
+            "stats": {
+              "type": "object",
+
+              "properties": {
+                "mark_duplicates": {
+                  "type": "object",
+
+                  "required": ["UNMAPPED_READS", "ESTIMATED_LIBRARY_SIZE", "UNPAIRED_READS_EXAMINED",
+                    "READ_PAIRS_EXAMINED", "READ_PAIR_OPTICAL_DUPLICATES", "PERCENT_DUPLICATION",
+                    "LIBRARY", "READ_PAIR_DUPLICATES", "UNPAIRED_READ_DUPLICATES"],
+
+                  "properties": {
+                    "UNMAPPED_READS": {"type": "number"},
+                    "ESTIMATED_LIBRARY_SIZE": {"type": "number"},
+                    "UNPAIRED_READS_EXAMINED": {"type": "number"},
+                    "READ_PAIRS_EXAMINED": {"type": "number"},
+                    "READ_PAIR_OPTICAL_DUPLICATES": {"type": "number"},
+                    "PERCENT_DUPLICATION": {"type": "number"},
+                    "LIBRARY": {"type": "string"},
+                    "READ_PAIR_DUPLCICATES": {"type": "number"},
+                    "UNPAIRED_READ_DUPLICATES": {"type": "number"}
+                  }
+                }
+              }
+            },
+
+            "settings": {
+              "type": "object",
+              "required": ["chunking", "skip_markduplicates", "skip_metrics", "numberChunks", "skip_flexiprep", "aligner"],
+
+              "properties": {
+                "aligner": {"type": "string"},
+                "chunking": {"type": "boolean"},
+                "numberChunks": {"type": ["number", "null"]},
+                "skip_flexiprep": {"type": "boolean"},
+                "skip_markduplicates": {"type": "boolean"},
+                "skip_metrics": {"type": "boolean"}
+              }
+
+            }
+          }
         },
 
         "bammetrics": {
