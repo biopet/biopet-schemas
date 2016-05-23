@@ -472,7 +472,16 @@
                 "num_reads_discarded_R2": {"type": "integer"},
                 "num_reads_kept": {"type": "integer"}
               }
-            }
+            },
+
+            "seqstat_R1": {"$ref": "#/definitions/flexiprep_seqstat"},
+            "seqstat_R2": {"$ref": "#/definitions/flexiprep_seqstat"},
+            "seqstat_R1_qc": {"$ref": "#/definitions/flexiprep_seqstat"},
+            "seqstat_R2_qc": {"$ref": "#/definitions/flexiprep_seqstat"},
+            "fastqc_R1": {"$ref": "#/definitions/flexiprep_fastqc"},
+            "fastqc_R2": {"$ref": "#/definitions/flexiprep_fastqc"},
+            "fastqc_R1_qc": {"$ref": "#/definitions/flexiprep_fastqc"},
+            "fastqc_R2_qc": {"$ref": "#/definitions/flexiprep_fastqc"}
           }
 
         },
@@ -505,7 +514,113 @@
     },
 
     "flexiprep_seqstat": {
-      "#TODO": "FINISH"
+      "description": "Seqstat stats for a flexiprep report",
+      "type": "object",
+      "required": ["reads", "bases"],
+
+      "properties": {
+
+        "reads": {
+          "type": "object",
+          "required": ["qual_encoding", "len_histogram", "num_avg_qual_gte",
+            "num_with_n", "num_total", "len_min", "len_max"],
+
+          "properties": {
+            "qual_enconding": {"type": "string"},
+
+            "len_histogram": {
+              "type": "array",
+              "items": {"type": "number"}
+            },
+
+            "num_avg_qual_gte": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {"type": "number"}
+            },
+
+            "num_with_n": {"type": "number"},
+            "num_total": {"type": "number"},
+            "len_min": {"type": "number"},
+            "len_max": {"type": "number"}
+          }
+        },
+
+        "bases": {
+          "type": "object",
+
+          "required": ["num_qual", "nucleotides", "num_total"],
+
+          "properties": {
+            "num_qual": {
+              "type": "array",
+              "items": {"type": "number"}
+            },
+
+            "nucleotides": {
+              "type": "object",
+
+              "patternProperties": {
+                "^[ACTGN]$": {"type": "number"}
+              }
+            },
+
+            "num_total": {"type": "number"}
+          }
+        }
+      }
+    },
+
+    "flexiprep_fastqc": {
+      "description": "FastQC stats for a flexiprep run",
+
+      "type": "object",
+
+      "required": ["per_base_sequence_quality", "adapters", "per_base_sequence_content"],
+
+      "properties": {
+        "per_base_sequence_quality": {
+          "type": "object",
+
+          "minItems" : 1,
+
+          "patternProperties": {
+            "^\\d+-\\d+$": {
+              "type": "object",
+              "required": ["median", "mean", "lower_quartile", "upper_quartile", "percentile_10th", "percentile_90th"],
+
+              "properties": {
+                "median": {"type": "number"},
+                "mean": {"type": "number"},
+                "lower_quartile": {"type": "number"},
+                "upper_quartile": {"type": "number"},
+                "percentile_10th": {"type": "number"},
+                "percentile_90th": {"type": "number"}
+              }
+            }
+          }
+        },
+
+        "adapters": {"type": "object"},
+
+        "per_base_sequence_content": {
+          "type": "object",
+          "minItems": 1,
+          "patternProperties": {
+            "^\\d+-\\d+$": {
+              "type": "object",
+
+              "properties": {
+                "A": {"type": "number"},
+                "C": {"type": "number"},
+                "T": {"type": "number"},
+                "G": {"type": "number"},
+                "N": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
     },
 
     "library": {
@@ -515,9 +630,7 @@
 
       "properties": {
 
-        "flexiprep": {
-          "type": "object"
-        },
+        "flexiprep": {"$ref": "#/definitions/flexiprep_library"},
 
         "mapping": {
           "type": "object"
@@ -590,9 +703,7 @@
 
     "md5": {
       "type": "string",
-      "minLength": 32,
-      "maxLength": 32,
-      "pattern": "^[a-f0-9]{32}$"
+      "pattern": "^([a-f0-9A-F]{32})|error_on_capture$"
     }
   }
 }
