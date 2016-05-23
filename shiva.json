@@ -692,7 +692,10 @@
               "required": ["chunking", "skip_markduplicates", "skip_metrics", "numberChunks", "skip_flexiprep", "aligner"],
 
               "properties": {
-                "aligner": {"type": "string"},
+                "aligner": {
+                  "type": "string",
+                  "enum": ["bwa-mem", "bwa-aln", "bowtie", "bowtie2", "gsnap", "tophat", "stampy", "star", "star-2pass"]
+                },
                 "chunking": {"type": "boolean"},
                 "numberChunks": {"type": ["number", "null"]},
                 "skip_flexiprep": {"type": "boolean"},
@@ -705,9 +708,315 @@
         },
 
         "bammetrics": {
-          "type": "object"
-        },
+          "type": "object",
 
+          "required": ["files", "executables", "stats", "settings"],
+
+          "properties": {
+            "files": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/file"},
+                  {"$ref": "#/definitions/fileGroup"}
+                ]
+              }
+            },
+
+            "executables": {
+              "type": "object",
+              "minItems" : 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/executable"},
+                  {"$ref": "#/definitions/gatk_executable"},
+                  {"$ref": "#/definitions/java_executable"}
+                ]
+              }
+            },
+
+            "stats": {
+              "type": "object",
+
+              "required": ["MeanQualityByCycle", "multi_metrics", "CollectAlignmentSummaryMetrics",
+                "QualityScoreDistribution", "wgs", "gc_bias", "CollectInsertSizeMetrics"],
+
+              "properties": {
+                "MeanQualityByCycle": {
+                  "type": "object",
+
+                  "required": ["MEAN_QUALITY", "CYCLE"],
+
+                  "properties": {
+                    "MEAN_QUALITY": {"type": "array", "items": {"type": "number"}},
+                    "CYCLE": {"type": "array", "items": {"type": "number"}}
+                  }
+                },
+
+                "multi_metrics": {
+                  "type": "object"
+                },
+
+                "hs_metrics": {
+                  "type": "object",
+
+                  "properties": {
+                    "HS_LIBRARY_SIZE": {"type": "number"},
+                    "HS_PENALTY_50X": {"type": "number"},
+                    "PCT_TARGET_BASES_10X": {"type": "number"},
+                    "OFF_BAIT_BASES": {"type": "number"},
+                    "ON_BAIT_BASES": {"type": "number"},
+                    "PCT_OFF_BAIT": {"type": "number"},
+                    "ON_BAIT_VS_SELECTED": {"type": "number"},
+                    "PF_UNIQUE_READS": {"type": "number"},
+                    "HS_PENALTY_30X": {"type": "number"},
+                    "PCT_TARGET_BASES_30X": {"type": "number"},
+                    "HS_PENALTY_40X": {"type": "number"},
+                    "TOTAL_READS": {"type": "number"},
+                    "ON_TARGET_BASES": {"type": "number"},
+                    "MEAN_TARGET_COVERAGE": {"type": "number"},
+                    "PCT_PF_UQ_READS": {"type": "number"},
+                    "BAIT_TERRITORY": {"type": "number"},
+                    "PCT_USABLE_BASES_ON_TARGET": {"type": "number"},
+                    "PCT_PF_READS": {"type": "number"},
+                    "PF_READS": {"type": "number"},
+                    "PCT_TARGET_BASES": {"type": "number"},
+                    "GQ_DROPOUT": {"type": "number"},
+                    "AT_DROPOUT": {"type": "number"},
+                    "PCT_TARGET_BASES_50X": {"type": "number"},
+                    "GENOME_SIZE": {"type": "number"},
+                    "PCT_PF_UQ_READS_ALIGNED": {"type": "number"},
+                    "FOLD_80_BASE_PENALTY": {"type": "number"},
+                    "HS_PENALTY_10X": {"type": "number"},
+                    "PCT_USABLE_BASES_ON_BAIT": {"type": "number"},
+                    "HS_PENALTY_20X": {"type": "number"},
+                    "ZERO_CVG_TARGETS_PCT": {"type": "number"},
+                    "PCT_TARGET_BASES_20X": {"type": "number"},
+                    "NEAR_BAIT_BASES": {"type": "number"},
+                    "TARGET_TERRITORY": {"type": "number"},
+                    "FOLD_ENRICHMENT": {"type": "number"},
+                    "PCT_TARGET_BASES_40X": {"type": "number"},
+                    "PCT_TARGET_BASES_100X": {"type": "number"},
+                    "BAIT_SET": {"type": "string"},
+                    "HS_PENALTY_100X": {"type": "number"},
+                    "BAIT_DESIGN_EFFICIENCY": {"type": "number"},
+                    "PCT_SELECTED_BASES": {"type": "number"},
+                    "MEAN_BAIT_COVERAGE": {"type": "number"},
+                    "PF_UQ_BASES_ALIGNED": {"type": "number"},
+                    "PF_UQ_READS_ALGINED": {"type": "number"}
+                  }
+                },
+
+                "CollectAlignmentSummaryMetrics": {
+                  "type": "object",
+
+                  "required": ["PAIR", "FIRST_OF_PAIR", "SECOND_OF_PAIR"],
+
+                  "properties": {
+                    "PAIR": {"$ref": "#/definitions/collect_alignment_summary_metrics"},
+                    "FIRST_OF_PAIR": {"$ref": "#/definitions/collect_alignment_summary_metrics"},
+                    "SECOND_OF_PAIR": {"$ref": "#/definitions/collect_alignment_summary_metrics"}
+                  }
+                },
+
+                "QualityScoreDistribution": {
+                  "type": "object",
+
+                  "required": ["COUNT_OF_Q", "QUALITY"],
+
+                  "properties": {
+                    "COUNT_OF_Q": {"type": "array", "items": {"type": "number"}},
+                    "QUALITY": {"type": "array", "items": {"type": "number"}}
+                  }
+                },
+
+                "wgs": {
+                  "type": "object",
+
+                  "required": ["metrics", "histogram"],
+
+                  "properties": {
+                    "histogram": {
+                      "type": "object",
+                      "required": ["count", "coverage"],
+                      "properties": {
+                        "count": {"type": "array", "items": {"type": "number"}},
+                        "coverage": {"type": "array", "items": {"type": "number"}}
+                      }
+                    },
+
+                    "metrics": {
+                      "type": "object",
+
+                      "properties": {
+                        "PCT_EXC_TOTAL": {"type": "number"},
+                        "MAD_COVERAGE": {"type": "number"},
+                        "PCT_EXC_BASEQ": {"type": "number"},
+                        "PCT_70X": {"type": "number"},
+                        "GENOME_TERRITORY": {"type": "number"},
+                        "PCT_20X": {"type": "number"},
+                        "PCT_EXC_UNPAIRED": {"type": "number"},
+                        "PCT_EXC_DUPE": {"type": "number"},
+                        "PCT_10X": {"type": "number"},
+                        "MEDIAN_COVERAGE": {"type": "number"},
+                        "SD_COVERAGE": {"type": "number"},
+                        "PCT_EXC_OVERLAP": {"type": "number"},
+                        "PCT_5X": {"type": "number"},
+                        "PCT_EXC_CAPPED": {"type": "number"},
+                        "PCT_EXC_MAPQ": {"type": "number"},
+                        "PCT_100X": {"type": "number"},
+                        "PCT_90X": {"type": "number"},
+                        "PCT_80X": {"type": "number"},
+                        "PCT_60X": {"type": "number"},
+                        "PCT_15X": {"type": "number"},
+                        "PCT_50X": {"type": "number"},
+                        "PCT_25X": {"type": "number"},
+                        "PCT_40X": {"type": "number"},
+                        "MEAN_COVERAGE": {"type": "number"},
+                        "PCT_30X": {"type": "number"}
+                      }
+                    }
+                  }
+                },
+
+                "CollectBaseDistributionByCycle": {
+                  "type": "object",
+                  "required": ["PCT_A", "PCT_T", "PCT_G", "PCT_C", "READ_END", "CYCLE"],
+
+                  "properties": {
+                    "PCT_A": {"type": "array", "items": {"type": "number"}},
+                    "PCT_T": {"type": "array", "items": {"type": "number"}},
+                    "PCT_C": {"type": "array", "items": {"type": "number"}},
+                    "PCT_G": {"type": "array", "items": {"type": "number"}},
+                    "PCT_N": {"type": "array", "items": {"type": "number"}},
+                    "READ_END": {"type": "array", "items": {"type": "number"}},
+                    "CYCLE": {"type": "array", "items": {"type": "number"}}
+                  }
+                },
+
+                "gc_bias": {
+                  "type": "object",
+
+                  "required": ["MEAN_BASE_QUALITY", "ERROR_BAR_WIDTH",
+                    "NORMALIZED_COVERAGE", "WINDOWS", "READ_STARTS",
+                    "ACCUMULATION_LEVEL", "READ_GROUP", "LIBRARY", "SAMPLE", "GC"],
+
+                  "properties": {
+                    "MEAN_BASE_QUALITY": {"type": "array", "items": {"type": "number"}},
+                    "ERROR_BAR_WIDTH": {"type": "array", "items": {"type": "number"}},
+                    "NORMALIZED_COVERAGE": {"type": "array", "items": {"type": "number"}},
+                    "WINDOWS": {"type": "array", "items": {"type": "number"}},
+                    "READ_STARTS": {"type": "array", "items": {"type": "number"}},
+                    "ACCUMULATION_LEVEL": {"type": "array", "items": {"type": "string"}},
+                    "READ_GROUP": {"type": "array", "items": {"type": ["string", "null"]}},
+                    "LIBRARY": {"type": "array", "items": {"type": ["string", "null"]}},
+                    "SAMPLE": {"type": "array", "items": {"type": ["string", "null"]}},
+                    "GC": {"type": "array", "items": {"type": "number"}}
+                  }
+                },
+
+                "CollectInsertSizeMetrics": {
+                  "type": "object",
+
+                  "required": ["metrics", "histogram"],
+
+                  "properties": {
+                    "histogram": {
+                      "type": "object",
+
+                      "required": ["All_Reads.fr_count", "insert_size"],
+                      "properties": {
+                        "All_Reads.fr_count": {"type": "array", "items": {"type": "number"}},
+                        "insert_size": {"type": "array", "items": {"type": "number"}}
+                      }
+                    },
+
+                    "metrics": {
+                      "type": "object",
+
+                      "properties": {
+                        "WIDTH_OF_70_PERCENT": {"type": "number"},
+                        "READ_PAIRS": {"type": "number"},
+                        "PAIR_ORIENTATION": {"type": "string"},
+                        "MEDIAN_INSERT_SIZE": {"type": "number"},
+                        "STANDARD_DEVIATION": {"type": "number"},
+                        "WIDTH_OF_30_PERCENT": {"type": "number"},
+                        "WIDTH_OF_10_PERCENT" :{"type": "number"},
+                        "MEAN_INSERT_SIZE": {"type": "number"},
+                        "WIDTH_OF_60_PERCENT": {"type": "number"},
+                        "WIDTH_OF_50_PERCENT": {"type": "number"},
+                        "WIDTH_OF_80_PERCENT": {"type": "number"},
+                        "MAX_INSERT_SIZE": {"type": "number"},
+                        "MEDIAN_ABSOLUTE_DEVIATION": {"type": "number"},
+                        "WIDTH_OF_99_PERCENT": {"type": "number"},
+                        "MIN_INSERT_SIZE": {"type": "number"},
+                        "WIDTH_OF_20_PERCENT": {"type": "number"},
+                        "WIDTH_OF_40_PERCENT": {"type": "number"},
+                        "WIDTH_OF_90_PERCENT": {"type": "number"}
+                      }
+                    }
+                  }
+                },
+
+                "targeted_pcr_metrics": {
+                  "type": "object",
+
+                  "properties": {
+                    "CUSTOM_AMPLICON_SET": {"type": "string"},
+                    "PCT_TARGET_BASES_10X": {"type": "number"},
+                    "PCT_TATRGET_BASES_30X": {"type": "number"},
+                    "PF_SELECTED_UNIQUE_PAIRS": {"type": "number"},
+                    "TOTAL_READS": {"type": "number"},
+                    "ON_TARGET_BASES": {"type": "number"},
+                    "MEAN_TARGET_COVERAGE": {"type": "number"},
+                    "PCT_OFF_AMPLICON": {"type": "number"},
+                    "PCT_PF_UQ_READS": {"type": "number"},
+                    "AMPLICON_TERRITORY": {"type": "number"},
+                    "PCT_AMPLIFIED_BASES" : {"type": "number"},
+                    "PCT_PF_READS": {"type": "number"},
+                    "PF_READS": {"type": "number"},
+                    "MEAN_AMPLICON_COVERAGE": {"type": "number"},
+                    "PCT_TARGET_BASES_2X": {"type": "number"},
+                    "GC_DROPOUT": {"type": "number"},
+                    "AT_DROPOUT": {"type": "number"},
+                    "PF_BASES": {"type": "number"},
+                    "GENOME_SIZE": {"type": "number"},
+                    "PCT_PF_UQ_READS_ALIGNED": {"type": "number"},
+                    "FOLD_80_BASE_PENALTY": {"type": "number"},
+                    "ZERO_CVG_TARGETS_PCT": {"type": "number"},
+                    "PCT_TARGET_BASES_20X": {"type": "number"},
+                    "ON_AMPLICON_VS_SELECTED": {"type": "number"},
+                    "TARGET_TERRITORY": {"type": "number"},
+                    "FOLD_ENRICHMENT": {"type": "number"},
+                    "PF_SELECTED_PAIRS": {"type": "number"},
+                    "ON_AMPLICON_BASES": {"type": "number"},
+                    "NEAR_AMPLICON_BASES": {"type": "number"},
+                    "ON_TARGET_FROM_PAIR_BASES": {"type": "number"},
+                    "OFF_AMPLICON_BASES": {"type": "number"},
+                    "PF_UNIQUE_READS": {"type": "number"},
+                    "PF_UQ_BASES_ALIGNED": {"type": "number"},
+                    "PF_UQ_READS_ALIGNED": {"type": "number"}
+                  }
+                }
+              },
+
+              "patternProperties": {
+                "^.+-flagstat.*$": {"$ref": "#/definitions/flagstat"}
+              }
+
+            },
+
+            "settings": {
+              "type": "object",
+
+              "properties": {
+                "amplicon_name": {"type": "string"},
+                "roi_name": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
+        },
         "shiva": {
           "type": "object",
 
@@ -730,6 +1039,67 @@
           }
         }
       }
+    },
+
+    "flagstat": {
+      "type": "object",
+
+      "properties": {
+        "First normal, second read inverted (paired end orientation)": {"type": "number"},
+        "MAPQ>60": {"type": "number"},
+        "NotPrimaryAlignment": {"type": "number"},
+        "ReadNegativeStrand": {"type": "number"},
+        "FirstOfPair": {"type": "number"},
+        "SecondOfPair": {"type": "number"},
+        "MateUnmapped": {"type": "number"},
+        "MAPQ>40": {"type": "number"},
+        "MAPQ>20": {"type": "number"},
+        "ProperPair": {"type": "number"},
+        "First inverted, second read inverted": {"type": "number"},
+        "MAPQ>0": {"type": "number"},
+        "Mate on other chr": {"type": "number"},
+        "SupplementaryAligment": {"type": "number"},
+        "ReadFailsVendorQualityCheck": {"type": "number"},
+        "MAPQ>10": {"type": "number"},
+        "First inverted, second read normal": {"type": "number"},
+        "Mapped": {"type": "number"},
+        "ReadPaired": {"type": "number"},
+        "MAPQ>50": {"type": "number"},
+        "All": {"type": "number"},
+        "Duplicates": {"type": "number"},
+        "Mate in same strand": {"type": "number"},
+        "MateNegativeStrand": {"type": "number"}
+      }
+
+    },
+
+    "collect_alignment_summary_metrics": {
+      "type": "object",
+      "properties": {
+        "PF_HQ_ALIGNED_READS": {"type": "number"},
+        "PF_HQ_MEDIAN_MISMATCHES": {"type": "number"},
+        "PF_HQ_ERROR_RATE": {"type": "number"},
+        "PF_ALIGNED_BASES": {"type": "number"},
+        "PF_HQ_ALIGNED_BASES": {"type": "number"},
+        "READS_ALIGNED_IN_PAIRS": {"type": "number"},
+        "PCT_PF_READS": {"type": "number"},
+        "MEAN_READ_LENGTH": {"type": "number"},
+        "PF_READS": {"type": "number"},
+        "PF_READS_ALIGNED": {"type": "number"},
+        "PF_MISMATCH_RATE": {"type": "number"},
+        "BAD_CYCLES": {"type": "number"},
+        "PF_INDEL_RATE": {"type": "number"},
+        "PF_NOISE_READS": {"type": "number"},
+        "STRAND_BALANCE": {"type": "number"},
+        "PCT_READS_ALIGNED_IN_PAIRS": {"type": "number"},
+        "PCT_PF_READS_ALIGNED": {"type": "number"},
+        "PCT_ADAPTER": {"type": "number"},
+        "TOTAL_READS": {"type": "number"},
+        "PCT_CHIMERAS": {"type": "number"},
+        "PF_HQ_ALIGNED_Q20_BASES": {"type": "number"}
+
+      }
+
     },
 
     "contig": {
