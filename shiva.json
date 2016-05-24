@@ -58,7 +58,48 @@
 
     "toucan": {
       "description": "toucan results (optional)",
-      "type": "object"
+      "type": "object",
+
+      "required": ["files", "executables", "stats", "settings"],
+
+      "properties": {
+        "files": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {"$ref": "#/definitions/file"},
+              {"$ref": "#/definitions/fileGroup"}
+            ]
+          }
+        },
+
+        "executables": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {"$ref": "#/definitions/executable"},
+              {"$ref": "#/definitions/gatk_executable"},
+              {"$ref": "#/definitions/java_executable"}
+            ]
+          }
+        },
+
+        "stats": {
+          "type": "object",
+
+          "required": ["variant_effect_predictor"],
+
+          "properties": {
+            "variant_effect_predictor": {"$ref": "#/definitions/variant_effect_predictor"}
+          }
+        },
+
+        "settings": {
+          "type": "object"
+        }
+      }
     },
 
     "shivavariantcalling": {
@@ -1324,6 +1365,113 @@
         "frac_min_50x": {"type": "number"}
       }
 
+    },
+
+    "variant_effect_predictor": {
+      "type": "object",
+
+      "required": ["VEP_run_statistics", "General_statistics", "Consequences_(all)",
+        "Consequences_(most_severe)", "Coding_consequences", "Variant_classes", "Position_in_protein"],
+
+      "properties": {
+        "VEP_run_statistics": {
+          "type": "object",
+
+          "properties": {
+            "VEP_version_(API)": {"type": "string"},
+            "Start_time": {"type": "string"},
+            "Output_file": {"type": "string"},
+            "Cache/Database": {"type": "string"},
+            "Run_time": {"type": "string"},
+            "Input_file_(format)": {"type": "string"},
+            "Command_line_options": {"type": "string"},
+            "Species": {"type": "string"},
+            "End_time": {"type": "string"}
+          }
+        },
+
+        "General_statistics": {
+          "type": "object",
+
+          "properties": {
+            "Novel_/_existing_variants": {"type": "string"},
+            "Overlapped_genes": {"type": "number"},
+            "Variants_processed": {"type": "number"},
+            "Lines_of_output_written": {"type": "number"},
+            "Lines_of_input_read": {"type": "number"},
+            "Variants_remaining_after_filtering": {"type": "number"},
+            "Overlapped_transcripts": {"type": "number"},
+            "Overlapped_regulatory_features": {"type": "number"}
+          }
+        },
+
+        "Consequences_(all)": {
+          "type": "object",
+
+          "properties": {
+            "": {"type": "string"}
+          },
+
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+
+        "Consequences_(most_severe)": {
+          "type": "object",
+
+          "properties": {
+            "": {"type": "string"}
+          },
+
+          "additionalProperties": {"type": "number"}
+        },
+
+        "Coding_consequences": {
+          "type": "object",
+
+          "properties": {
+            "": {"type": "string"}
+          },
+
+          "additionalProperties": {"type": "number"}
+        },
+
+        "Variant_classes": {
+          "type": "object",
+
+          "properties": {
+            "": {"type": "string"},
+
+            "additionalProperties": {"type": "number"}
+          }
+        },
+
+        "Position_in_protein": {
+          "type": "object",
+
+          "patternProperties": {
+            "\\d+-\\d+%": {"type": "number"}
+          },
+
+          "additionalProperties": false
+        }
+
+      },
+
+      "patternProperties": {
+        "^Distribution_of_variants_on_chromosome_\\d+$": {
+          "type": "object",
+          "minItems": 1,
+          "properties": {
+            "": {"type": "string"}
+          },
+          "patternProperties": {
+            "^\\d+$": {"type": "number"}
+          },
+          "additionalProperties": false
+        }
+      }
     },
 
     "contig": {
