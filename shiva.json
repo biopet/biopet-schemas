@@ -254,7 +254,65 @@
         },
 
         "bammetrics": {
-          "type": "object"
+          "type": "object",
+
+          "required": ["files", "executables", "stats", "settings"],
+
+          "properties": {
+            "files": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/file"},
+                  {"$ref": "#/definitions/fileGroup"}
+                ]
+              }
+            },
+
+            "executables": {
+              "type": "object",
+              "minItems": 1,
+              "additionalProperties": {
+                "anyOf": [
+                  {"$ref": "#/definitions/executable"},
+                  {"$ref": "#/definitions/gatk_executable"},
+                  {"$ref": "#/definitions/java_executable"}
+                ]
+              }
+            },
+
+            "stats": {
+              "type": "object",
+
+              "properties": {
+                "MeanQualityByCycle": {"$ref": "#/definitions/MeanQualityByCycle"},
+                "multi_metrics": {"$ref": "#/definitions/multi_metrics"},
+                "hs_metrics": {"$ref": "#/definitions/hs_metrics"},
+                "CollectAlignmentSummaryMetrics": {"$ref": "#/definitions/CollectAlignmentSummaryMetrics"},
+                "QualityScoreDistribution": {"$ref": "#/definitions/QualityScoreDistribution"},
+                "targeted_pcr_metrics": {"$ref": "#/definitions/targeted_pcr_metrics"},
+                "wgs": {"$ref": "#/definitions/wgs"},
+                "CollectBaseDistributionByCycle": {"$ref": "#/definitions/CollectBaseDistributionByCycle"},
+                "gc_bias": {"$ref": "#/definitions/gc_bias"},
+                "CollectInsertSizeMetrics": {"$ref": "#/definitions/CollectInsertSizeMetrics"}
+              },
+
+              "additionalProperties": {
+                "^.+-flagstat.*$": {"$ref": "#/definitions/flagstat"},
+                "^.+-covstat$": {"$ref": "#/definitions/covstat"}
+              }
+            },
+
+            "settings": {
+              "type": "object",
+
+              "properties": {
+                "amplicon_name": {"type": ["string", "null"]},
+                "roi": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
         },
 
         "shivavariantcalling": {
@@ -1230,6 +1288,42 @@
         "PF_UQ_BASES_ALIGNED": {"type": "number"},
         "PF_UQ_READS_ALIGNED": {"type": "number"}
       }
+    },
+
+    "covstat": {
+      "type": "object",
+
+      "required": ["coverage"],
+
+      "properties": {
+        "coverage": {
+          "type": "object",
+          "minItems": 1,
+          "additionalProperties": {"$ref": "#/definition/covstat_chromosome"}
+        }
+      }
+    },
+
+    "covstat_chromosome": {
+      "type": "object",
+
+      "required": ["total", "mean", "median", "max", "horizontal", "width_nonzero",
+        "frac_min_10x", "frac_min_20x", "frac_min_30x", "frac_min_40x", "frac_min_50x"],
+
+      "properties": {
+        "total": {"type": "number"},
+        "mean": {"type": "number"},
+        "median": {"type": "number"},
+        "max": {"type": "number"},
+        "horizontal": {"type": "number"},
+        "width_nonzero": {"type": "number"},
+        "frac_min_10x": {"type": "number"},
+        "frac_min_20x": {"type": "number"},
+        "frac_min_30x": {"type": "number"},
+        "frac_min_40x": {"type": "number"},
+        "frac_min_50x": {"type": "number"}
+      }
+
     },
 
     "contig": {
