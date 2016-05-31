@@ -1,147 +1,147 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Gentrap Pipeline Summary",
-    "description": "Schema for full Gentrap pipeline runs",
-    "type": "object",
-    "required": [ "samples", "gentrap" ],
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Gentrap Pipeline Summary",
+  "description": "Schema for full Gentrap pipeline runs",
+  "type": "object",
+  "required": [ "samples", "gentrap", "meta" ],
 
-    "properties": {
+  "properties": {
 
-      "meta": {
-        "description": "Pipeline run metadata",
-        "type": "object",
-        "required": [ "pipeline_version", "last_commit_hash", "pipeline_name" ],
+    "meta": {
+      "description": "Pipeline run metadata",
+      "type": "object",
+      "required": [ "pipeline_version", "last_commit_hash", "pipeline_name" ],
 
-        "properties": {
+      "properties": {
 
-          "pipeline_version": {
-            "description": "Pipeline release version",
-            "type": "string"
-          },
+        "pipeline_version": {
+          "description": "Pipeline release version",
+          "type": "string"
+        },
 
-          "last_commit_hash": {
-            "description": "Commit hash of the source code repository at the time the pipeline was compiled",
-            "type": "string",
-            "minLength": 7
-          },
+        "last_commit_hash": {
+          "description": "Commit hash of the source code repository at the time the pipeline was compiled",
+          "type": "string",
+          "minLength": 7
+        },
 
-          "pipeline_name": {
-            "description": "Name of the pipeline that created the summary file",
-            "type": "string"
-          },
+        "pipeline_name": {
+          "description": "Name of the pipeline that created the summary file",
+          "type": "string"
+        },
 
-          "run_name": {
-            "description": "User-supplied name of the pipeline run",
-            "type": "string"
-          }
+        "run_name": {
+          "description": "User-supplied name of the pipeline run",
+          "type": "string"
         }
-      },
+      }
+    },
 
-      "samples": {
-        "description": "All samples analyzed in the Gentrap run",
-        "type": "object",
-        "minItems": 1,
-        "additionalProperties": { "$ref": "#/definitions/sample" }
-      },
+    "samples": {
+      "description": "All samples analyzed in the Gentrap run",
+      "type": "object",
+      "minItems": 1,
+      "additionalProperties": { "$ref": "#/definitions/sample" }
+    },
 
-      "gentrap": {
-        "description": "Pipeline-level Gentrap information",
-        "type": "object",
-        "required": [ "files", "executables", "settings" ],
+    "gentrap": {
+      "description": "Pipeline-level Gentrap information",
+      "type": "object",
+      "required": [ "files", "executables", "settings" ],
 
-        "properties": {
+      "properties": {
 
-          "files": {
-            "description": "File groups tracked by Gentrap",
-            "type": "object",
+        "files": {
+          "description": "File groups tracked by Gentrap",
+          "type": "object",
 
-            "properties": {
+          "properties": {
 
-              "pipeline": {
-                "description": "Files tracked by Gentrap",
-                "type": "object",
-                "required": [ "annotation_refflat" ],
-                "additionalProperties": { "$ref": "#/definitions/file" }
-              }
+            "pipeline": {
+              "description": "Files tracked by Gentrap",
+              "type": "object",
+              "required": [ "annotation_refflat" ],
+              "additionalProperties": { "$ref": "#/definitions/file" }
             }
-          },
+          }
+        },
 
-          "executables": {
-            "description": "Executables used in the Gentrap run",
-            "type": "object",
-            "additionalProperties": {
-              "anyOf": [
-                { "$ref": "#/definitions/executable" },
-                { "$ref": "#/definitions/jar" }
-              ]
-            }
-          },
+        "executables": {
+          "description": "Executables used in the Gentrap run",
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              { "$ref": "#/definitions/executable" },
+              { "$ref": "#/definitions/jar" }
+            ]
+          }
+        },
 
-          "settings": {
-            "description": "Settings used for the Gentrap run",
-            "type": "object",
-            "required": [
-              "call_variants", "remove_ribosomal_reads",
-              "expression_measures", "strand_protocol", "reference"
-            ],
+        "settings": {
+          "description": "Settings used for the Gentrap run",
+          "type": "object",
+          "required": [
+            "call_variants", "remove_ribosomal_reads",
+            "expression_measures", "strand_protocol", "reference"
+          ],
 
-            "properties": {
+          "properties": {
 
-              "aligner": { "type": "string" },
-              "call_variants": { "type": "boolean" },
-              "remove_ribosomal_reads": { "type": "boolean" },
+            "aligner": { "type": "string" },
+            "call_variants": { "type": "boolean" },
+            "remove_ribosomal_reads": { "type": "boolean" },
 
-              "expression_measures": {
-                "description": "Expression measurements for each sample",
-                "type": "array",
-                "minItems": 0,
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "FragmentsPerGene", "FragmentsPerExon",
-                    "BasesPerGene", "BasesPerExon", "BaseCounts",
-                    "CufflinksStrict", "CufflinksGuided", "CufflinksBlind",
-                    "BiosBaseCounts"
-                  ]
-                }
-              },
-
-              "strand_protocol": {
-                "description": "Wet lab protocol that was used to track origin strand of reads",
+            "expression_measures": {
+              "description": "Expression measurements for each sample",
+              "type": "array",
+              "minItems": 0,
+              "items": {
                 "type": "string",
-                "enum": [ "NonSpecific", "Dutp" ]
-              },
+                "enum": [
+                  "FragmentsPerGene", "FragmentsPerExon",
+                  "BasesPerGene", "BasesPerExon", "BaseCounts",
+                  "CufflinksStrict", "CufflinksGuided", "CufflinksBlind",
+                  "BiosBaseCounts"
+                ]
+              }
+            },
 
-              "reference": {
-                "description": "Reference sequence information",
-                "type": "object",
-                "required": [ "contigs" ],
+            "strand_protocol": {
+              "description": "Wet lab protocol that was used to track origin strand of reads",
+              "type": "string",
+              "enum": [ "NonSpecific", "Dutp" ]
+            },
 
-                "properties": {
+            "reference": {
+              "description": "Reference sequence information",
+              "type": "object",
+              "required": [ "contigs" ],
 
-                  "contigs": {
-                    "description": "All contigs / chromosomes in the reference sequence",
-                    "type": "object",
-                    "minItems": 1,
-                    "additionalProperties": { "$ref": "#/definitions/referenceContig" }
-                  },
+              "properties": {
 
-                  "species": {
-                    "description": "Reference sequence species name",
-                    "type": "string"
-                  },
+                "contigs": {
+                  "description": "All contigs / chromosomes in the reference sequence",
+                  "type": "object",
+                  "minItems": 1,
+                  "additionalProperties": { "$ref": "#/definitions/referenceContig" }
+                },
 
-                  "name": {
-                    "description": "Build name of the reference sequence. For example, hg38 for the human genome.",
-                    "type": "string"
-                  }
+                "species": {
+                  "description": "Reference sequence species name",
+                  "type": "string"
+                },
+
+                "name": {
+                  "description": "Build name of the reference sequence. For example, hg38 for the human genome.",
+                  "type": "string"
                 }
               }
             }
           }
         }
       }
-    },
+    }
+  },
 
   "definitions": {
 
