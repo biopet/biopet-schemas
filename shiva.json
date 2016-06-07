@@ -373,13 +373,16 @@
           }
         },
         "bammetrics": {
+
           "type": "object",
+
           "required": [
             "files",
             "executables",
             "stats",
             "settings"
           ],
+
           "properties": {
             "files": {
               "type": "object",
@@ -414,6 +417,16 @@
             },
             "stats": {
               "type": "object",
+
+              "additionalProperties": {
+                "^.+-flagstat.*$": {
+                  "$ref": "#/definitions/flagstat"
+                },
+                "^.+-covstat$": {
+                  "$ref": "#/definitions/covstat"
+                }
+              },
+
               "properties": {
                 "MeanQualityByCycle": {
                   "$ref": "#/definitions/MeanQualityByCycle"
@@ -444,14 +457,6 @@
                 },
                 "CollectInsertSizeMetrics": {
                   "$ref": "#/definitions/CollectInsertSizeMetrics"
-                }
-              },
-              "additionalProperties": {
-                "^.+-flagstat.*$": {
-                  "$ref": "#/definitions/flagstat"
-                },
-                "^.+-covstat$": {
-                  "$ref": "#/definitions/covstat"
                 }
               }
             },
@@ -1087,6 +1092,11 @@
             "stats",
             "settings"
           ],
+          "patternProperties": {
+            "^.+-flagstat.*$": {
+              "$ref": "#/definitions/flagstat"
+            }
+          },
           "properties": {
             "files": {
               "type": "object",
@@ -1160,11 +1170,6 @@
                 },
                 "targeted_pcr_metrics": {
                   "$ref": "#/definitions/targeted_pcr_metrics"
-                },
-                "patternProperties": {
-                  "^.+-flagstat.*$": {
-                    "$ref": "#/definitions/flagstat"
-                  }
                 }
               },
               "settings": {
