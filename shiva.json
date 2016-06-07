@@ -766,41 +766,49 @@
       }
     },
     "flexiprep_library": {
-      "description": "Flexiprep summary for a library",
+      "description": "Library-level Flexiprep information",
       "type": "object",
-      "required": [
-        "files",
-        "executables",
-        "stats",
-        "settings"
-      ],
+      "required": [ "files", "executables", "settings", "stats" ],
+
       "properties": {
         "files": {
-          "description": "Set of files for this library",
+          "description": "File groups tracked by Flexiprep",
           "type": "object",
-          "minItems": 1,
-          "additionalProperties": {
-            "anyOf": [
-              {
+          "required": [
+            "pipeline",
+            "fastqc_R1"
+          ],
+          "properties": {
+            "pipeline": {
+              "description": "Initial input files and final output files in Flexiprep",
+              "type": "object",
+              "required": [
+                "input_R1",
+                "output_R1"
+              ],
+              "additionalProperties": {
                 "$ref": "#/definitions/file"
-              },
-              {
-                "$ref": "#/definitions/fileGroup"
               }
-            ]
+            },
+            "fastqc_R1": {
+              "description": "FastQC files of the R1 read",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/file"
+              }
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/fileGroup"
           }
         },
         "executables": {
-          "description": "Flexiprep executables for this library",
+          "description": "Executables used in Flexiprep",
           "type": "object",
-          "minItems": 1,
           "additionalProperties": {
             "anyOf": [
               {
                 "$ref": "#/definitions/executable"
-              },
-              {
-                "$ref": "#/definitions/gatk_executable"
               },
               {
                 "$ref": "#/definitions/java_executable"
@@ -808,29 +816,73 @@
             ]
           }
         },
+        "settings": {
+          "description": "Settings used for the Flexiprep run",
+          "type": "object",
+          "required": [
+            "skip_trim",
+            "skip_clip",
+            "paired"
+          ],
+          "properties": {
+            "skip_trim": {
+              "description": "Whether base quality trimming step is skipped or not",
+              "type": "boolean"
+            },
+            "skip_clip": {
+              "description": "Whether adapter clipping step is skipped or not",
+              "type": "boolean"
+            },
+            "paired": {
+              "description": "Whether the input sequence is paired or not",
+              "type": "boolean"
+            }
+          }
+        },
         "stats": {
-          "description": "Flexiprep stats for this run",
+          "description": "Statistics gathered by Flexiprep",
           "type": "object",
           "required": [
             "fastqc_R1",
-            "fastqc_R2",
-            "fastqc_R1_qc",
-            "fastqc_R2_qc"
+            "seqstat_R1"
           ],
           "properties": {
+            "seqstat_R1": {
+              "$ref": "#/definitions/statsSeqstat"
+            },
+            "seqstat_R2": {
+              "$ref": "#/definitions/statsSeqstat"
+            },
+            "seqstat_R1_qc": {
+              "$ref": "#/definitions/statsSeqstat"
+            },
+            "fastqc_R1": {
+              "$ref": "#/definitions/statsFastqc"
+            },
+            "fastqc_R2": {
+              "$ref": "#/definitions/statsFastqc"
+            },
+            "fastqc_R1_qc": {
+              "$ref": "#/definitions/statsFastqc"
+            },
+            "fastqc_R2_qc": {
+              "$ref": "#/definitions/statsFastqc"
+            },
+            "clipping_R1": {
+              "$ref": "#/definitions/statsCutadapt"
+            },
+            "clipping_R2": {
+              "$ref": "#/definitions/statsCutadapt"
+            },
             "trimming_R1": {
-              "$ref": "#/definitions/flexiprep_trim"
+              "$ref": "#/definitions/statsSickle"
             },
             "trimming_R2": {
-              "$ref": "#/definitions/flexiprep_trim"
+              "$ref": "#/definitions/statsSickle"
             },
             "fastq_sync": {
+              "description": "Statistics for read syncing, after clipping",
               "type": "object",
-              "required": [
-                "num_reads_discarded_R1",
-                "num_reads_discarded_R2",
-                "num_reads_kept"
-              ],
               "properties": {
                 "num_reads_discarded_R1": {
                   "type": "integer"
@@ -843,219 +895,35 @@
                 }
               }
             },
-            "seqstat_R1": {
-              "$ref": "#/definitions/flexiprep_seqstat"
-            },
-            "seqstat_R2": {
-              "$ref": "#/definitions/flexiprep_seqstat"
-            },
-            "seqstat_R1_qc": {
-              "$ref": "#/definitions/flexiprep_seqstat"
-            },
-            "seqstat_R2_qc": {
-              "$ref": "#/definitions/flexiprep_seqstat"
-            },
-            "fastqc_R1": {
-              "$ref": "#/definitions/flexiprep_fastqc"
-            },
-            "fastqc_R2": {
-              "$ref": "#/definitions/flexiprep_fastqc"
-            },
-            "fastqc_R1_qc": {
-              "$ref": "#/definitions/flexiprep_fastqc"
-            },
-            "fastqc_R2_qc": {
-              "$ref": "#/definitions/flexiprep_fastqc"
-            }
-          }
-        },
-        "settings": {
-          "description": "Settings for flexiprep for this library",
-          "type": "object",
-          "required": [
-            "paired",
-            "skip_trim",
-            "skip_clip"
-          ],
-          "properties": {
-            "paired": {
-              "type": "boolean"
-            },
-            "skip_trim": {
-              "type": "boolean"
-            },
-            "skip_clip": {
-              "type": "boolean"
-            }
-          }
-        }
-      }
-    },
-    "flexiprep_trim": {
-      "description": "Trimming stats for a flexiprep report",
-      "type": "object",
-      "required": [
-        "num_reads_kept",
-        "num_reads_discarded_total"
-      ],
-      "properties": {
-        "num_reads_kept": {
-          "type": "integer"
-        },
-        "num_reads_discarded_total": {
-          "type": "integer"
-        }
-      }
-    },
-    "flexiprep_seqstat": {
-      "description": "Seqstat stats for a flexiprep report",
-      "type": "object",
-      "required": [
-        "reads",
-        "bases"
-      ],
-      "properties": {
-        "reads": {
-          "type": "object",
-          "required": [
-            "qual_encoding",
-            "len_histogram",
-            "num_avg_qual_gte",
-            "num_with_n",
-            "num_total",
-            "len_min",
-            "len_max"
-          ],
-          "properties": {
-            "qual_enconding": {
-              "type": "string"
-            },
-            "len_histogram": {
-              "type": "array",
-              "items": {
-                "type": "number"
-              }
-            },
-            "num_avg_qual_gte": {
-              "type": "object",
-              "minItems": 1,
-              "additionalProperties": {
-                "type": "number"
-              }
-            },
-            "num_with_n": {
-              "type": "number"
-            },
-            "num_total": {
-              "type": "number"
-            },
-            "len_min": {
-              "type": "number"
-            },
-            "len_max": {
-              "type": "number"
-            }
-          }
-        },
-        "bases": {
-          "type": "object",
-          "required": [
-            "num_qual",
-            "nucleotides",
-            "num_total"
-          ],
-          "properties": {
-            "num_qual": {
-              "type": "array",
-              "items": {
-                "type": "number"
-              }
-            },
-            "nucleotides": {
-              "type": "object",
-              "patternProperties": {
-                "^[ACTGN]$": {
-                  "type": "number"
-                }
-              }
-            },
-            "num_total": {
-              "type": "number"
-            }
-          }
-        }
-      }
-    },
-    "flexiprep_fastqc": {
-      "description": "FastQC stats for a flexiprep run",
-      "type": "object",
-      "required": [
-        "per_base_sequence_quality",
-        "adapters",
-        "per_base_sequence_content"
-      ],
-      "properties": {
-        "per_base_sequence_quality": {
-          "type": "object",
-          "minItems": 1,
-          "patternProperties": {
-            "^\\d+-\\d+$": {
+            "trimming": {
+              "description": "Statistics for base-quality trimming, based on sickle results. Found in version 0.4.0 or earlier.",
               "type": "object",
               "required": [
-                "median",
-                "mean",
-                "lower_quartile",
-                "upper_quartile",
-                "percentile_10th",
-                "percentile_90th"
+                "num_reads_discarded_total",
+                "num_reads_kept"
               ],
+              "additionalProperties": false,
               "properties": {
-                "median": {
-                  "type": "number"
+                "num_reads_discarded_total": {
+                  "type": "integer"
                 },
-                "mean": {
-                  "type": "number"
+                "num_reads_kept": {
+                  "type": "integer"
                 },
-                "lower_quartile": {
-                  "type": "number"
+                "num_reads_discarded_R1": {
+                  "type": "integer"
                 },
-                "upper_quartile": {
-                  "type": "number"
+                "num_reads_discarded_R2": {
+                  "type": "integer"
                 },
-                "percentile_10th": {
-                  "type": "number"
+                "num_reads_discarded_both": {
+                  "type": "integer"
                 },
-                "percentile_90th": {
-                  "type": "number"
-                }
-              }
-            }
-          }
-        },
-        "adapters": {
-          "type": "object"
-        },
-        "per_base_sequence_content": {
-          "type": "object",
-          "minItems": 1,
-          "patternProperties": {
-            "^\\d+-\\d+$": {
-              "type": "object",
-              "properties": {
-                "A": {
-                  "type": "number"
+                "num_reads_kept_R1": {
+                  "type": "integer"
                 },
-                "C": {
-                  "type": "number"
-                },
-                "T": {
-                  "type": "number"
-                },
-                "G": {
-                  "type": "number"
-                },
-                "N": {
-                  "type": "number"
+                "num_reads_kept_R2": {
+                  "type": "integer"
                 }
               }
             }
@@ -2403,6 +2271,242 @@
     "md5": {
       "type": "string",
       "pattern": "^([a-f0-9A-F]{32})|error_on_capture$"
+    },
+
+    "statsFastqc": {
+      "description": "Sequence statistics created by FastQC (part of the Flexiprep pipeline)",
+      "type": "object",
+      "required": [ "per_base_sequence_quality", "per_base_sequence_content" ],
+
+      "properties": {
+
+        "per_base_sequence_quality": {
+          "description": "Quality statistics per base position",
+          "type": "object",
+          "additionalProperties": false,
+
+          "patternProperties": {
+            "^([0-9]+|[0-9]+-[0-9]+)$": {
+              "description": "Aggregate statistics per base position or per group of base positions",
+              "type": "object",
+              "required": [ "mean", "median", "lower_quartile", "upper_quartile", "percentile_10th", "percentile_90th" ],
+              "properties": {
+
+                "mean": { "type": "number" },
+                "median": { "type": "number" },
+                "lower_quartile": { "type": "number" },
+                "upper_quartile": { "type": "number" },
+                "percentile_10th": { "type": "number" },
+                "percentile_90th": { "type": "number" }
+              }
+            }
+          }
+        },
+
+        "per_base_sequence_content": {
+          "description": "Composition statistics per base position",
+          "type": "object",
+          "additionalProperties": false,
+
+          "patternProperties": {
+            "^([0-9]+|[0-9]+-[0-9]+)$": {
+              "description": "Base composition per base position or per group of base positions",
+              "type": "object",
+              "additionalProperties": false,
+
+              "patternProperties": {
+                "^[ACGTURYMKSWHBVDN]$": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "statsCutadapt": {
+      "description": "Sequence statistics from a Cutadapt run (part of the Flexiprep pipeline)",
+      "type": "object",
+      "required": [ "adapters", "num_reads_affected", "num_reads_discarded_too_long", "num_reads_discarded_too_short" ],
+
+      "properties": {
+
+        "num_reads_affected": { "type": "integer" },
+        "num_reads_discarded_too_long": { "type": "integer" },
+        "num_reads_discarded_too_short": { "type": "integer" },
+
+        "adapters": {
+          "description": "Adapters found in the library",
+          "type": "object",
+          "additionalProperties": false,
+
+          "patternProperties": {
+            "^.+$": {
+              "oneOf": [
+                {
+                  "description": "Adapter sequence and how many times it is clipped by Cutadapt. This is in version 0.4.0 or earlier.",
+                  "type": "array",
+                  "items": { "type": [ "string", "integer" ] },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "description": "Cutadapt clip counts. This is in version 0.5.0",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                {
+                  "description": "Adapter sequence name, the sequence itself, and how many times it is clipped. In version 0.6.0.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "sequence": {
+                      "description": "Adapter sequence.",
+                      "type": "string"
+                    },
+                    "count": {
+                      "description": "How many times the adapter is clipped.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                {
+                  "description": "Adapter sequence name, the sequence itself. Map with counts and histogram. In version 0.7.0 or higher.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "sequence": {
+                      "description": "Adapter sequence.",
+                      "type": "string"
+                    },
+                    "stats": {
+                      "description": "Statistics for this adapter, with count and histogram",
+                      "type": "object",
+                      "additionalProperties": true,
+                      "properties": {
+                        "count": {
+                          "description": "How many times the adapter is clipped.",
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "histogram": {
+                          "description": "Histogram of clipped bases from either 3p or 5p end",
+                          "type": "object",
+
+                          "patternProperties": {
+                            "^[3p|5p]$": { "type": "object" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    "statsSickle": {
+      "description": "Statistics for base-quality trimming, based on sickle results. Found in version 0.5.0 or higher.",
+      "type": "object",
+      "required": [ "num_reads_kept", "num_reads_discarded_total" ],
+
+      "properties": {
+        "num_reads_kept": { "type": "integer" },
+        "num_reads_discarded_total": { "type": "integer" }
+      }
+    },
+    "statsSeqstat": {
+      "description": "Sequence statistics created by SeqStat (part of the Flexiprep pipeline)",
+      "type": "object",
+      "required": [ "bases", "reads" ],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "bases": {
+          "description": "Base pair-level statistics",
+          "type": "object",
+          "required": [ "nucleotides", "num_total", "num_qual" ],
+
+          "properties": {
+
+            "nucleotides": {
+              "description": "Counts of specific nucleotides across all reads (including ambiguous characters as outlined in http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/",
+              "type": "object",
+              "additionalProperties": false,
+
+              "patternProperties": {
+                "^[ACGTURYMKSWHBVDN]$": { "type": "integer" }
+              }
+            },
+
+            "num_total": {
+              "description": "Total number of bases",
+              "type": "integer"
+            },
+
+            "num_qual": {
+              "description": "Array of base counts by quality, from quality 0 to 60",
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        },
+
+        "reads": {
+          "description": "Read-level statistics",
+          "type": "object",
+          "required": [ "len_max", "len_min", "num_with_n", "num_total", "num_avg_qual_gte", "qual_encoding" ],
+
+          "properties": {
+
+            "len_max": {
+              "description": "Length of longest read",
+              "type": "integer"
+            },
+
+            "len_min": {
+              "description": "Length of shortest read",
+              "type": "integer"
+            },
+
+            "num_with_n": {
+              "description": "Number of reads that contains at least one 'N' or 'n' base",
+              "type": "integer"
+            },
+
+            "num_total": {
+              "description": "Total number of reads",
+              "type": "integer"
+            },
+
+            "num_avg_qual_gte": {
+              "description": "Number of reads with quality greater than a certain number",
+              "type": "object",
+              "additionalProperties": false,
+
+              "patternProperties": {
+                "^[0-9]+$": { "type": "integer" }
+              }
+            },
+
+            "qual_encoding": {
+              "description": "Quality encoding; which can be sanger (ASCII offset 33), solexa, or illumina (both with ASCII offset 64)",
+              "type": "string",
+              "enum": [ "sanger", "illumina", "solexa" ]
+            },
+
+            "len_histogram": {
+              "description": "Holds the histogram of all read lengths found in the fastq file",
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        }
+      }
     }
   }
 }
