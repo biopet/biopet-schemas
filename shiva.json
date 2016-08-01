@@ -168,6 +168,9 @@
                   "$ref": "#/definitions/vcfstats-info"
                 }
               ]
+            },
+            "-genotype_concordance-": {
+              "$ref": "#/definitions/genotype-concordancy"
             }
           }
         },
@@ -2104,31 +2107,31 @@
           "type": "object",
           "properties": {
             "VEP_version_(API)": {
-              "type": "string"
+              "type": ["string", "number"]
             },
             "Start_time": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Output_file": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Cache/Database": {
-              "type": "string"
+              "type": ["string", "number", "null"]
             },
             "Run_time": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Input_file_(format)": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Command_line_options": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Species": {
-              "type": "string"
+              "type": ["string", "null", "number"]
             },
             "End_time": {
-              "type": "string"
+              "type": ["string", "null"]
             }
           }
         },
@@ -2136,7 +2139,7 @@
           "type": "object",
           "properties": {
             "Novel_/_existing_variants": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "Overlapped_genes": {
               "type": "number"
@@ -2514,6 +2517,55 @@
           }
         }
       }
+    },
+
+    "genotype-concordancy": {
+      "type": "object",
+      "required": [
+        "evalProportions",
+        "genotypeSummary",
+        "siteSummary",
+        "compProportions",
+        "counts"
+      ],
+
+      "properties": {
+        "evalProportions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/evalPropSample"}
+        },
+        "genotypeSummary": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/genotypeSummarySample"}
+        },
+        "siteSummary": {
+          "type": "object"
+        },
+        "compProportions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/compProportionsSample"}
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/concordancyCountsSample"}
+        }
+      }
+    },
+
+    "evalPropSample": {
+      "type": "object"
+    },
+
+    "genotypeSummarySample": {
+      "type": "object"
+    },
+
+    "compProportionsSample": {
+      "type": "object"
+    },
+
+    "concordancyCountsSample": {
+      "type": "object"
     }
   }
 }
