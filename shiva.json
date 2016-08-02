@@ -2116,7 +2116,7 @@
               "type": ["string", "null"]
             },
             "Cache/Database": {
-              "type": ["string", "number", "null"]
+              "type": ["string", "number"]
             },
             "Run_time": {
               "type": ["string", "null"]
@@ -2128,7 +2128,7 @@
               "type": ["string", "null"]
             },
             "Species": {
-              "type": ["string", "null", "number"]
+              "type": ["string"]
             },
             "End_time": {
               "type": ["string", "null"]
@@ -2139,7 +2139,7 @@
           "type": "object",
           "properties": {
             "Novel_/_existing_variants": {
-              "type": ["string", "null"]
+              "type": ["string", "number"]
             },
             "Overlapped_genes": {
               "type": "number"
