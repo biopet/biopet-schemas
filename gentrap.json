@@ -293,7 +293,7 @@
             "settings": {
               "description": "Settings used for Mapping",
               "type": "object",
-              "required": [ "aligner", "chunking", "numberChunks", "skip_flexiprep", "skip_markduplicates", "skip_metrics" ],
+              "required": [ "aligner", "chunking", "skip_flexiprep", "skip_markduplicates", "skip_metrics" ],
 
               "properties": {
 
