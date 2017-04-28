@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics gathered by Picard CollectWgsMetrics tool",
+  "type": "object",
+  "required": ["metrics", "histogram"],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "GENOME_TERRITORY": { "type": "integer" },
+        "MAD_COVERAGE": { "type": "integer" },
+        "MEAN_COVERAGE": { "type": "number" },
+        "MEDIAN_COVERAGE": { "type": "number" },
+        "PCT_5X": { "type": "number" },
+        "PCT_10X": { "type": "number" },
+        "PCT_15X": { "type": "number" },
+        "PCT_20X": { "type": "number" },
+        "PCT_25X": { "type": "number" },
+        "PCT_30X": { "type": "number" },
+        "PCT_40X": { "type": "number" },
+        "PCT_50X": { "type": "number" },
+        "PCT_60X": { "type": "number" },
+        "PCT_70X": { "type": "number" },
+        "PCT_80X": { "type": "number" },
+        "PCT_90X": { "type": "number" },
+        "PCT_100X": { "type": "number" },
+        "PCT_EXC_BASEQ": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_CAPPED": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_DUPE": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_MAPQ": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_OVERLAP": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_TOTAL": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "PCT_EXC_UNPAIRED": { "oneOf": [
+          { "type": "number" },
+          { "type": "string", "pattern": "^\\?$" }
+        ] },
+        "SD_COVERAGE": { "type": "number" }
+      }
+    },
+
+    "histogram": {
+      "type": "object",
+      "properties": {
+        "coverage": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "count": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
+
