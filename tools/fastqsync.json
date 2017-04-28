@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics for read syncing, after clipping",
+  "type": "object",
+  "required": [ "num_reads_discarded_R1", "num_reads_discarded_R2", "num_reads_kept" ],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "num_reads_discarded_R1": { "type": "integer" },
+    "num_reads_discarded_R2": { "type": "integer" },
+    "num_reads_kept": { "type": "integer" }
+  }
+}
+
