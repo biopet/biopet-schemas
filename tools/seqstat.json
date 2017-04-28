@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Sequence statistics created by SeqStat (part of the Flexiprep pipeline)",
+  "type": "object",
+  "required": [ "bases", "reads" ],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "bases": {
+      "description": "Base pair-level statistics",
+      "type": "object",
+      "required": [ "nucleotides", "num_total", "num_qual" ],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "nucleotides": {
+          "description": "Counts of specific nucleotides across all reads (including ambiguous characters as outlined in http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/",
+          "type": "object",
+          "additionalProperties": false,
+
+          "patternProperties": {
+            "^[ACGTURYMKSWHBVDN]$": { "type": "integer" }
+          }
+        },
+
+        "num_total": {
+          "description": "Total number of bases",
+          "type": "integer"
+        },
+
+        "num_qual": {
+          "description": "Array of base counts by quality, from quality 0 to 60",
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    },
+
+    "reads": {
+      "description": "Read-level statistics",
+      "type": "object",
+      "required": [ "len_max", "len_min", "num_with_n", "num_total", "num_avg_qual_gte", "qual_encoding", "len_histogram" ],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "len_max": {
+          "description": "Length of longest read",
+          "type": "integer"
+        },
+
+        "len_min": {
+          "description": "Length of shortest read",
+          "type": "integer"
+        },
+
+        "num_with_n": {
+          "description": "Number of reads that contains at least one 'N' or 'n' base",
+          "type": "integer"
+        },
+
+        "num_total": {
+          "description": "Total number of reads",
+          "type": "integer"
+        },
+
+        "num_avg_qual_gte": {
+          "description": "Number of reads with quality greater than a certain number",
+          "type": "object",
+          "additionalProperties": false,
+
+          "patternProperties": {
+            "^[0-9]+$": { "type": "integer" }
+          }
+        },
+
+        "qual_encoding": {
+          "description": "Quality encoding; which can be sanger (ASCII offset 33), solexa (ASCII offset 64)",
+          "type": "string",
+          "enum": [ "sanger", "solexa" ]
+        },
+
+        "len_histogram": {
+          "description": "Holds the histogram of all read lengths found in the fastq file",
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
+
