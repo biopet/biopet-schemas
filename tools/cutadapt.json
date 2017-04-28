@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Sequence statistics from a Cutadapt run (part of the Flexiprep pipeline), TODO adapters",
+  "type": "object",
+  "minProperties": 10,
+  "additionalProperties": false,
+
+  "properties": {
+
+    "num_reads_affected": { "type": "integer" },
+    "num_reads_input": { "type": "integer" },
+    "num_reads_with_adapters": { "type": "integer" },
+    "num_reads_output": { "type": "integer" },
+    "num_reads_discarded_too_short": { "type": "integer" },
+    "num_reads_discarded_too_long": { "type": "integer" },
+    "num_reads_discarded_many_n": { "type": "integer" },
+    "num_bases_input": { "type": "integer" },
+    "num_bases_output": { "type": "integer" },
+
+    "adapters": {
+      "description": "Adapters found in the library",
+      "type": "object"
+    }
+  }
+}
+
