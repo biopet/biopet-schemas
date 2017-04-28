@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Metrics gathered by Picard CollectAlignmentSummaryMetrics",
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+
+    "FIRST_OF_PAIR": { "$ref": "#/definitions/statsAlignmentSummaryPair" },
+    "SECOND_OF_PAIR": { "$ref": "#/definitions/statsAlignmentSummaryPair" },
+    "PAIR": { "$ref": "#/definitions/statsAlignmentSummaryPair" },
+    "UNPAIRED": { "$ref": "#/definitions/statsAlignmentSummaryPair" }
+  },
+
+  "definitions" : {
+
+    "statsAlignmentSummaryPair": {
+      "description": "Alignment statistics gathered by Picard CollectAlignmentSummaryMetrics, per pair",
+      "type": "object",
+      "required": [
+        "PCT_CHIMERAS",
+        "PF_HQ_ALIGNED_READS",
+        "PF_HQ_ERROR_RATE",
+        "PF_INDEL_RATE",
+        "PF_MISMATCH_RATE",
+        "PF_READS",
+        "TOTAL_READS"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "BAD_CYCLES": {
+          "type": "integer"
+        },
+        "MEAN_READ_LENGTH": {
+          "type": "number"
+        },
+        "PCT_ADAPTER": {
+          "type": "number"
+        },
+        "PCT_CHIMERAS": {
+          "type": "number"
+        },
+        "PCT_PF_READS": {
+          "type": "number"
+        },
+        "PCT_PF_READS_ALIGNED": {
+          "type": "number"
+        },
+        "PCT_READS_ALIGNED_IN_PAIRS": {
+          "type": "number"
+        },
+        "PF_ALIGNED_BASES": {
+          "type": "integer"
+        },
+        "PF_HQ_ALIGNED_BASES": {
+          "type": "integer"
+        },
+        "PF_HQ_ALIGNED_Q20_BASES": {
+          "type": "integer"
+        },
+        "PF_HQ_ALIGNED_READS": {
+          "type": "integer"
+        },
+        "PF_HQ_ERROR_RATE": {
+          "type": "number"
+        },
+        "PF_HQ_MEDIAN_MISMATCHES": {
+          "type": "number"
+        },
+        "PF_INDEL_RATE": {
+          "type": "number"
+        },
+        "PF_MISMATCH_RATE": {
+          "type": "number"
+        },
+        "PF_NOISE_READS": {
+          "type": "integer"
+        },
+        "PF_READS": {
+          "type": "integer"
+        },
+        "PF_READS_ALIGNED": {
+          "type": "integer"
+        },
+        "READS_ALIGNED_IN_PAIRS": {
+          "type": "integer"
+        },
+        "STRAND_BALANCE": {
+          "type": "number"
+        },
+        "TOTAL_READS": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
+
