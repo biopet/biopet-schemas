@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "TODO",
+  "type": "object",
+  "required": [ "contigs", "total"],
+  "additionalProperties": false,
+
+  "properties": {
+    "contigs": {
+      "minItems": 1,
+      "additionalProperties": {
+        "$ref": "#/definitions/statistics"
+      }
+    },
+    "total": {
+      "$ref": "#/definitions/statistics"
+    }
+  },
+
+  "definitions": {
+    "statistics": {
+      "type": "object",
+
+      "required": [ "genotype", "info" , "sample_distributions"],
+      "additionalProperties": false,
+
+      "properties": {
+        "genotype": {
+          "type": "object",
+          "minProperties": 8,
+          "additionalProperties": false,
+
+          "properties": {
+            "GQ": {},
+            "AD": {},
+            "AD-used": {},
+            "DP": {},
+            "general": {
+              "minItems": 1,
+              "additionalProperties": {
+                "$ref": "#/definitions/x"
+              }
+            },
+            "AD-alt": {},
+            "AD-ref":  {},
+            "AD-not_used": {}
+        },
+        "info": {
+          "type": "object",
+          "minProperties": 6,
+          "additionalProperties": false,
+
+          "properties": {
+            "AC": { "$ref": "#/definitions/counts" },
+            "AN": { "$ref": "#/definitions/counts" },
+            "AF": { "$ref": "#/definitions/counts" },
+            "QUAL": { "$ref": "#/definitions/counts" },
+            "DP": { "$ref": "#/definitions/counts" },
+            "general": { "$ref": "#/definitions/counts" }
+          }
+        },
+
+
+        "sample_distributions": {
+          "type": "object",
+          "minProperties": 12,
+          "additionalProperties": false,
+
+          "properties": {
+            "Available": { "$ref": "#/definitions/counts" },
+            "Het": { "$ref": "#/definitions/counts" },
+            "NoCall": { "$ref": "#/definitions/counts" },
+            "Hom": { "$ref": "#/definitions/counts" },
+            "HomRef": { "$ref": "#/definitions/counts" },
+            "NonInformative": { "$ref": "#/definitions/counts" },
+            "HomVar": { "$ref": "#/definitions/counts" },
+            "HetNonRef": { "$ref": "#/definitions/counts" },
+            "Mixed": { "$ref": "#/definitions/counts" },
+            "Filtered": { "$ref": "#/definitions/counts" },
+            "Total": { "$ref": "#/definitions/counts" },
+            "Called": { "$ref": "#/definitions/counts" }
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [ "value", "count" ],
+      "additionalProperties": false,
+
+      "value": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "count": {
+        "type": "array",
+        "items": { "type": "integer" }
+      }
+    },
+    "x": {
+      "type": "object",
+
+      "properties": {
+        "Hom": { "type": "integer" },
+        "NoCall": { "type": "integer" },
+        "Variant": { "type": "integer" },
+        "Filtered": { "type": "integer" },
+        "NonInformative": { "type": "integer" },
+        "Called": { "type": "integer" },
+        "Total": { "type": "integer" },
+        "HomVar": { "type": "integer" },
+        "HomRef": { "type": "integer" },
+        "Mixed": { "type": "integer" },
+        "Available": { "type": "integer" },
+        "HetNonRef": { "type": "integer" },
+        "Het": { "type": "integer" }
+      }
+
+    }
+  }
+}
+
