@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics gathered by Picard's CollectBaseDistributionByCycle tool",
+  "type": "object",
+  "minProperties": 7,
+  "additionalProperties": false,
+
+  "properties": {
+
+    "CYCLE": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "READ_END": {
+      "type": "array",
+      "items": { "type": "integer" }
+    }
+  },
+  "patternProperties": {
+    "^PCT_[ATGCN]$": {
+      "type": "array",
+      "items": { "type": "number" }
+    }
+  }
+}
+

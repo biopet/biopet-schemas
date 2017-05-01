@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics gathered by the Picard's QualityScoreDistribution tool",
+  "type": "object",
+  "required": [ "QUALITY", "COUNT_OF_Q"],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "QUALITY": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "COUNT_OF_Q": {
+      "type": "array",
+      "items": { "type": "integer" }
+    }
+  }
+}
+
