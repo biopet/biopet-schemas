@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "GC bias statistics gather by the Picard CollectGcBiasMetrics tool TODO",
+  "type": "object",
+  "minProperties": 10,
+  "additionalProperties": false,
+
+  "properties": {
+
+    "WINDOWS": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "GC": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "MEAN_BASE_QUALITY": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "ERROR_BAR_WIDTH": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "NORMALIZED_COVERAGE": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "READ_STARTS": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "ACCUMULATION_LEVEL": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "READ_GROUP": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "LIBRARY": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "SAMPLE": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  }
+}
+
