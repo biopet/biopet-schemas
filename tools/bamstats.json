@@ -1,11 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO ja muuta additionalProperties: false",
+  "description": "TODO",
   "type": "object",
   "minProperties": 8,
-  "additionalProperties": true,
+  "additionalProperties": false,
 
   "properties": {
+    "mapping_quality": { "$ref": "#/definitions/histogram" },
+    "insert_size": { "$ref": "#/definitions/histogram" },
+    "clipping": { "$ref": "#/definitions/histogram" },
+    "left_clipping": { "$ref": "#/definitions/histogram" },
+    "right_clipping": { "$ref": "#/definitions/histogram" },
+    "5_prime_clipping": { "$ref": "#/definitions/histogram" },
+    "3_prime_clipping": { "$ref": "#/definitions/histogram" },
+
     "flagstats": {
       "description": "Alignment statistics gathered by Biopet's FlagstatCollector",
       "type": "object",
@@ -46,6 +54,28 @@
 
       "patternProperties": {
         "^MAPQ>[1-6]?0$": { "type": "integer" }
+      }
+    }
+  },
+
+  "definitions": {
+
+    "histogram": {
+
+      "description": "TODO",
+      "type": "object",
+
+      "properties": {
+
+        "counts": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+
+        "values": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
       }
     }
   }
