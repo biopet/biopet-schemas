@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "TODO",
+  "type": "object",
+  "required": [ "metrics" ],
+  "additionalProperties": false,
+
+  "properties": {
+    "metrics" : {
+      "type": "object",
+      "minProperties": 30,
+      "additionalProperties": false,
+
+      "properties": {
+        "AlBWBranch": { "type": "integer" },
+        "AlBWOp": { "type": "integer" },
+        "AlConFail": { "type": "integer" },
+        "AlConFailFail": { "type": "integer" },
+        "AlConFailRep": { "type": "integer" },
+        "AlConFailUni": { "type": "integer" },
+        "AlConRep": { "type": "integer" },
+        "AlConRepFail": { "type": "integer" },
+        "AlConRepRep": { "type": "integer" },
+        "AlConRepUni": { "type": "integer" },
+        "AlConUni": { "type": "integer" },
+        "AlDis": { "type": "integer" },
+        "AlUnpFail": { "type": "integer" },
+        "AlUnpRep": { "type": "integer" },
+        "AlUnpUni": { "type": "integer" },
+        "Base": { "type": "integer" },
+        "InterSCacheHit": { "type": "integer" },
+        "IntraSCacheHit": { "type": "integer" },
+        "OutOfMemory": { "type": "integer" },
+        "Paired": { "type": "integer" },
+        "Read": { "type": "integer" },
+        "ResBWBranch": { "type": "integer" },
+        "ResBWOp": { "type": "integer" },
+        "SameRead": { "type": "integer" },
+        "SameReadBase": { "type": "integer" },
+        "SeedSearch": { "type": "integer" },
+        "Time": { "type": "integer" },
+        "UnfilteredBase": { "type": "integer" },
+        "UnfilteredRead": { "type": "integer" },
+        "Unpaired": { "type": "integer" }
+      }
+    }
+  }    
+}
+
