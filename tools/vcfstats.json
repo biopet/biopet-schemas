@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "TODO: add desc and replace y",
   "type": "object",
   "required": [ "contigs", "total"],
   "additionalProperties": false,
@@ -20,8 +20,7 @@
   "definitions": {
     "statistics": {
       "type": "object",
-
-      "required": [ "genotype", "info" , "sample_distributions"],
+      "required": [ "genotype", "info", "sample_distributions"],
       "additionalProperties": false,
 
       "properties": {
@@ -31,36 +30,102 @@
           "additionalProperties": false,
 
           "properties": {
-            "GQ": {},
-            "AD": {},
-            "AD-used": {},
-            "DP": {},
+            "GQ": { "$ref": "#/definitions/y" },
+            "AD": { "$ref": "#/definitions/y" },
+            "AD-used": { "$ref": "#/definitions/y" },
+            "DP": { "$ref": "#/definitions/y" },
+            "AD-alt": { "$ref": "#/definitions/y" },
+            "AD-ref": { "$ref": "#/definitions/y" },
+            "AD-not_used": { "$ref": "#/definitions/y" },
             "general": {
               "minItems": 1,
               "additionalProperties": {
-                "$ref": "#/definitions/x"
+                "type": "object",
+
+                "properties": {
+                  "Hom": { "type": "integer" },
+                  "NoCall": { "type": "integer" },
+                  "Variant": { "type": "integer" },
+                  "Filtered": { "type": "integer" },
+                  "NonInformative": { "type": "integer" },
+                  "Called": { "type": "integer" },
+                  "Total": { "type": "integer" },
+                  "HomVar": { "type": "integer" },
+                  "HomRef": { "type": "integer" },
+                  "Mixed": { "type": "integer" },
+                  "Available": { "type": "integer" },
+                  "HetNonRef": { "type": "integer" },
+                  "Het": { "type": "integer" }
+                }
               }
-            },
-            "AD-alt": {},
-            "AD-ref":  {},
-            "AD-not_used": {}
+            }
+          }
         },
         "info": {
           "type": "object",
-          "minProperties": 6,
+          "required": [ "AC", "AN", "AF", "QUAL", "DP", "general"],
           "additionalProperties": false,
-
           "properties": {
             "AC": { "$ref": "#/definitions/counts" },
             "AN": { "$ref": "#/definitions/counts" },
             "AF": { "$ref": "#/definitions/counts" },
             "QUAL": { "$ref": "#/definitions/counts" },
             "DP": { "$ref": "#/definitions/counts" },
-            "general": { "$ref": "#/definitions/counts" }
+            "VariantCaller": { "$ref": "#/definitions/counts" },
+            "general": {
+              "type": "object",
+              "required": [ "value", "count" ],
+              "additionalProperties": false,
+
+              "properties": {
+                "value": {
+                  "oneOf": [{
+                    "type": "array",
+                    "minItems": 19,
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "Biallelic",
+                        "ComplexIndel",
+                        "Filtered",
+                        "FullyDecoded",
+                        "Indel",
+                        "MNP",
+                        "Mixed",
+                        "MonomorphicInSamples",
+                        "NotFiltered",
+                        "PointEvent",
+                        "PolymorphicInSamples",
+                        "SNP",
+                        "SimpleDeletion",
+                        "SimpleInsertion",
+                        "StructuralIndel",
+                        "Symbolic",
+                        "SymbolicOrSV",
+                        "Total",
+                        "Variant"
+                      ]
+                    }
+                  }, {
+                    "type": "array",
+                    "maxItems": 0
+                  }]
+                },
+                "count": {
+                  "oneOf": [{
+                    "type": "array",
+                    "minItems": 19,
+                    "maxItems": 19,
+                    "items": { "type": "integer" }
+                  }, {
+                    "type": "array",
+                    "maxItems": 0
+                  }]
+                }
+              }
+            }
           }
         },
-
-
         "sample_distributions": {
           "type": "object",
           "minProperties": 12,
@@ -78,7 +143,8 @@
             "Mixed": { "$ref": "#/definitions/counts" },
             "Filtered": { "$ref": "#/definitions/counts" },
             "Total": { "$ref": "#/definitions/counts" },
-            "Called": { "$ref": "#/definitions/counts" }
+            "Called": { "$ref": "#/definitions/counts" },
+            "Variant": { "$ref": "#/definitions/counts" }
           }
         }
       }
@@ -88,35 +154,27 @@
       "required": [ "value", "count" ],
       "additionalProperties": false,
 
-      "value": {
-        "type": "array",
-        "items": { "type": "string" }
-      },
-      "count": {
-        "type": "array",
-        "items": { "type": "integer" }
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": { "type": [ "string", "integer" ] }
+        },
+        "count": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
       }
     },
-    "x": {
+    "y": {
       "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
 
-      "properties": {
-        "Hom": { "type": "integer" },
-        "NoCall": { "type": "integer" },
-        "Variant": { "type": "integer" },
-        "Filtered": { "type": "integer" },
-        "NonInformative": { "type": "integer" },
-        "Called": { "type": "integer" },
-        "Total": { "type": "integer" },
-        "HomVar": { "type": "integer" },
-        "HomRef": { "type": "integer" },
-        "Mixed": { "type": "integer" },
-        "Available": { "type": "integer" },
-        "HetNonRef": { "type": "integer" },
-        "Het": { "type": "integer" }
+        "patternProperties": {
+          "^[0-9]{1,2}$": { "type": "integer" }
+        }
       }
-
     }
   }
 }
-
