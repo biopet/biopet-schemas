@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "RNA-seq statistics gathered by Picard CollectRnaSeqMetrics tool",
+  "type": "object",
+  "required": [ "metrics" , "histogram"],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "metrics": {
+      "description": "Metrics values",
+      "type": "object",
+
+      "required": [ "CODING_BASES", "CORRECT_STRAND_READS", "IGNORED_READS", "INCORRECT_STRAND_READS",
+        "INTERGENIC_BASES", "INTRONIC_BASES", "MEDIAN_3PRIME_BIAS", "MEDIAN_5PRIME_BIAS",
+        "MEDIAN_5PRIME_TO_3PRIME_BIAS", "PF_ALIGNED_BASES", "PF_BASES", "UTR_BASES" ],
+      "additionalProperties": false,
+
+      "properties": {
+        "CODING_BASES": { "type": "integer" },
+        "CORRECT_STRAND_READS": { "type": "integer" },
+        "IGNORED_READS": { "type": "integer" },
+        "INCORRECT_STRAND_READS": { "type": "integer" },
+        "INTERGENIC_BASES": { "type": "integer" },
+        "INTRONIC_BASES": { "type": "integer" },
+        "MEDIAN_3PRIME_BIAS": { "type": "number" },
+        "MEDIAN_5PRIME_BIAS": { "type": "number" },
+        "MEDIAN_5PRIME_TO_3PRIME_BIAS": { "type": ["number", "string"] },
+        "MEDIAN_CV_COVERAGE": { "type": "number" },
+        "PCT_CODING_BASES": { "type": "number" },
+        "PCT_CORRECT_STRAND_READS": { "type": "number" },
+        "PCT_INTERGENIC_BASES": { "type": "number" },
+        "PCT_INTRONIC_BASES": { "type": "number" },
+        "PCT_MRNA_BASES": { "type": "number" },
+        "PCT_RIBOSOMAL_BASES": { "type": ["number", "string"] },
+        "PCT_USABLE_BASES": { "type": "number" },
+        "PCT_UTR_BASES": { "type": "number" },
+        "PF_ALIGNED_BASES": { "type": "integer" },
+        "PF_BASES": { "type": "integer" },
+        "RIBOSOMAL_BASES": { "type": ["integer", "string"] },
+        "UTR_BASES": { "type": "integer" }
+      }
+    },
+
+    "histogram": {
+
+      "description": "Histogram values (used for plotting).",
+      "type": "object",
+      "required": [ "normalized_position", "All_Reads.normalized_coverage" ],
+      "additionalProperties": false,
+
+      "properties": {
+
+        "normalized_position": {
+          "type": "array",
+          "items": { "type": "number" }
+        },
+
+        "All_Reads.normalized_coverage": {
+          "type": "array",
+          "items": { "type": "number" }
+        }
+      }
+    }
+  }
+}
+
