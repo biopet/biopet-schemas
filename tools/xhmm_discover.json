@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "TODO",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [ "DEL", "DUP"],
+    "additionalProperties": false,
+    "properties": {
+      "DEL": { "type": "integer" },
+      "DUP": { "type": "integer" }
+    }
+  }
+}
+
