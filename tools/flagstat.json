@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "TODO",
+  "type": "object",
+  "minProperties": 22,
+  "additionalProperties": false,
+
+  "properties": {
+
+    "All": { "type": "integer" },
+    "Duplicates": { "type": "integer" },
+    "FirstOfPair": { "type": "integer" },
+    "Mapped": { "type": "integer" },
+    "MateNegativeStrand": { "type": "integer" },
+    "MateUnmapped": { "type": "integer" },
+    "NotPrimaryAlignment": { "type": "integer" },
+    "ProperPair": { "type": "integer" },
+    "ReadFailsVendorQualityCheck": { "type": "integer" },
+    "ReadNegativeStrand": { "type": "integer" },
+    "ReadPaired": { "type": "integer" },
+    "SecondOfPair": { "type": "integer" },
+    "SecondaryOrSupplementary": { "type": "integer" },
+    "Singletons": { "type": "integer" },
+    "SupplementaryAlignment": { "type": "integer" }
+  },
+
+  "patternProperties": {
+    "^MAPQ>[1-6]?0$": { "type": "integer" }
+  }
+}
