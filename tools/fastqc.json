@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "FastQC results",
-  "description": "TODO",
+  "description": "FastQC results.",
   "type": "object",
   "required": [ "per_base_sequence_quality", "per_base_sequence_content" ],
   "additionalProperties": true,
@@ -11,7 +10,6 @@
     "per_base_sequence_quality": {
       "description": "Quality statistics per base position",
       "type": "object",
-
 
       "patternProperties": {
         "^([0-9]+|[0-9]+-[0-9]+)$": {
@@ -50,4 +48,3 @@
     }
   }
 }
-

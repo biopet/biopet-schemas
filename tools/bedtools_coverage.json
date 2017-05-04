@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Information about coverage, 'bedtools coverage -d' is run for this.",
   "type": "object",
   "required": [ "coverage" ],
   "additionalProperties": false,
@@ -8,7 +8,7 @@
   "properties": {
     "coverage": {
       "type": "object",
-      "minItems": 1,
+      "minProperties": 1,
       "additionalProperties": {
         "type": "object",
         "minProperties": 12,
@@ -30,4 +30,3 @@
     }
   }
 }
-

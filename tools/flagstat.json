@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Alignment statistics gathered by Biopet's FlagstatCollector.",
   "type": "object",
   "minProperties": 22,
   "additionalProperties": false,
