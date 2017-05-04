@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "PCR-related metrics for targeted sequencing data, Picard's CollectTargetedPcrMetrics is used.",
   "type": "object",
   "minProperties": 44,
   "additionalProperties": false,
