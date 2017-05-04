@@ -6,13 +6,13 @@
   "additionalProperties": false,
 
   "properties": {
-    "mapping_quality": { "$ref": "#/definitions/histogram" },
-    "insert_size": { "$ref": "#/definitions/histogram" },
-    "clipping": { "$ref": "#/definitions/histogram" },
-    "left_clipping": { "$ref": "#/definitions/histogram" },
-    "right_clipping": { "$ref": "#/definitions/histogram" },
-    "5_prime_clipping": { "$ref": "#/definitions/histogram" },
-    "3_prime_clipping": { "$ref": "#/definitions/histogram" },
+    "mapping_quality": { "$ref": "#/definitions/distribution" },
+    "insert_size": { "$ref": "#/definitions/distribution" },
+    "clipping": { "$ref": "#/definitions/distribution" },
+    "left_clipping": { "$ref": "#/definitions/distribution" },
+    "right_clipping": { "$ref": "#/definitions/distribution" },
+    "5_prime_clipping": { "$ref": "#/definitions/distribution" },
+    "3_prime_clipping": { "$ref": "#/definitions/distribution" },
 
     "flagstats": {
       "type": "object",
@@ -59,20 +59,40 @@
 
   "definitions": {
 
-    "histogram": {
+    "distribution": {
       "type": "object",
-      "minProperties": 2,
+      "required": [ "general", "histogram" ],
       "additionalProperties": false,
 
       "properties": {
+        "general": {
+          "type": "object",
+          "minProperties": 5,
+          "additionalProperties": false,
 
-        "counts": {
-          "type": "array",
-          "items": { "type": "integer" }
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "mean": { "type": "number" },
+            "median": { "type": "number" },
+            "modal":  { "type": "number" }
+          }
         },
-        "values": {
-          "type": "array",
-          "items": { "type": "integer" }
+        "histogram": {
+          "type": "object",
+          "minProperties": 2,
+          "additionalProperties": false,
+
+          "properties": {
+            "counts": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "values": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
         }
       }
     }
