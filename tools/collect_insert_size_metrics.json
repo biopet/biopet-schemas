@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Metrics about library's insert size, Picard's CollectInsertSizeMetrics is used.",
   "type": "object",
   "required": [ "metrics", "histogram" ],
   "additionalProperties": false,
@@ -9,7 +9,6 @@
 
     "metrics": {
 
-      "description": "Metrics values",
       "type": "object",
       "minProperties": 18,
       "additionalProperties": false,
@@ -48,4 +47,3 @@
     }
   }
 }
-
