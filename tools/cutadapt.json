@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Sequence statistics from a Cutadapt run (part of the Flexiprep pipeline), TODO adapters",
+  "description": "Sequence statistics from a Cutadapt run (part of the Flexiprep pipeline).",
   "type": "object",
   "minProperties": 10,
   "additionalProperties": false,
@@ -19,8 +19,38 @@
 
     "adapters": {
       "description": "Adapters found in the library",
-      "type": "object"
+      "type": "object",
+
+      "additionalProperties": {
+        "type": "object",
+        "minProperties": 2,
+        "additionalProperties": false,
+
+        "properties": {
+          "sequence": { "type": "string" },
+          "stats": {
+            "description": "Statistics for this adapter, with count and histogram",
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": false,
+
+            "properties": {
+              "count": {
+                "description": "How many times the adapter is clipped.",
+                "type": "integer"
+              },
+              "histogram": {
+                "description": "Histogram of clipped bases from either 3p or 5p end",
+                "type": "object",
+
+                "patternProperties": {
+                  "^[3p|5p]$": { "type": "object" }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
-
