@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO: add desc and replace y",
+  "description": "Summary statistics about a vcf-file.",
   "type": "object",
   "required": [ "contigs", "total"],
   "additionalProperties": false,
 
   "properties": {
     "contigs": {
-      "minItems": 1,
+      "minProperties": 1,
       "additionalProperties": {
         "$ref": "#/definitions/statistics"
       }
@@ -30,15 +30,15 @@
           "additionalProperties": false,
 
           "properties": {
-            "GQ": { "$ref": "#/definitions/y" },
-            "AD": { "$ref": "#/definitions/y" },
-            "AD-used": { "$ref": "#/definitions/y" },
-            "DP": { "$ref": "#/definitions/y" },
-            "AD-alt": { "$ref": "#/definitions/y" },
-            "AD-ref": { "$ref": "#/definitions/y" },
-            "AD-not_used": { "$ref": "#/definitions/y" },
+            "GQ": { "$ref": "#/definitions/countsPerSample" },
+            "AD": { "$ref": "#/definitions/countsPerSample" },
+            "AD-used": { "$ref": "#/definitions/countsPerSample" },
+            "DP": { "$ref": "#/definitions/countsPerSample" },
+            "AD-alt": { "$ref": "#/definitions/countsPerSample" },
+            "AD-ref": { "$ref": "#/definitions/countsPerSample" },
+            "AD-not_used": { "$ref": "#/definitions/countsPerSample" },
             "general": {
-              "minItems": 1,
+              "minProperties": 1,
               "additionalProperties": {
                 "type": "object",
 
@@ -165,7 +165,7 @@
         }
       }
     },
-    "y": {
+    "countsPerSample": {
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {
