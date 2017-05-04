@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Metrics reported when the alignment is checked for duplicate reads, Picard's MarkDuplicates tool is used.",
   "type": "object",
   "required": [
     "ESTIMATED_LIBRARY_SIZE",
@@ -31,4 +31,3 @@
 
   }
 }
-
