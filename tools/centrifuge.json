@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Various metrics reported by Centrifuge.",
   "type": "object",
   "required": [ "metrics" ],
   "additionalProperties": false,
@@ -46,4 +46,3 @@
     }
   }    
 }
-
