@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Comparison of sample variant callsets with a reference, GATK's GenotypeConcordance tool is used for this.",
   "type": "object",
   "required": [
     "evalProportions",
@@ -160,4 +160,3 @@
     }
   }
 }
-
