@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Alignment statistics gathered by Biopet's BamStats class.",
   "type": "object",
   "minProperties": 8,
   "additionalProperties": false,
@@ -15,7 +15,6 @@
     "3_prime_clipping": { "$ref": "#/definitions/histogram" },
 
     "flagstats": {
-      "description": "Alignment statistics gathered by Biopet's FlagstatCollector",
       "type": "object",
       "minProperties": 28,
       "additionalProperties": false,
@@ -61,9 +60,9 @@
   "definitions": {
 
     "histogram": {
-
-      "description": "TODO",
       "type": "object",
+      "minProperties": 2,
+      "additionalProperties": false,
 
       "properties": {
 
@@ -71,7 +70,6 @@
           "type": "array",
           "items": { "type": "integer" }
         },
-
         "values": {
           "type": "array",
           "items": { "type": "integer" }
@@ -80,4 +78,3 @@
     }
   }
 }
-
