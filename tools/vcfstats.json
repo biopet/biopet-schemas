@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Summary statistics about a vcf-file.",
   "type": "object",
-  "required": [ "contigs", "total"],
+  "required": [ "contigs", "total" ],
   "additionalProperties": false,
 
   "properties": {
