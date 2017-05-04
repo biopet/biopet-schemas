@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "TODO",
+  "description": "Results from Variant Effect Predictor.",
   "type": "object",
   "required": [
     "VEP_run_statistics",
