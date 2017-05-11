@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Comparison of sample variant callsets with a reference, GATK's GenotypeConcordance tool is used for this.",
+  "type": "object",
+  "required": [
+    "evalProportions",
+    "genotypeSummary",
+    "siteSummary",
+    "compProportions",
+    "counts"
+  ],
+  "additionalProperties": false,
+
+  "properties": {
+    "evalProportions": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/evalPropSample"}
+    },
+    "genotypeSummary": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/genotypeSummarySample"}
+    },
+    "siteSummary": {
+      "type": "object",
+      "minProperties": 6,
+      "additionalProperties": false,
+      "properties": {
+        "ALLELES_DO_NOT_MATCH": {"type": "number"},
+        "EVAL_SUBSET_TRUTH": {"type": "number"},
+        "EVAL_SUPERSET_TRUTH": {"type": "number"},
+        "TRUTH_ONLY": {"type": "number"},
+        "ALLELES_MATCH": {"type": "number"},
+        "EVAL_ONLY": {"type": "number"}
+      }
+    },
+    "compProportions": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/compProportionsSample"}
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/concordancyCountsSample"}
+    }
+  },
+
+  "definitions": {
+    "evalPropSample": {
+      "type": "object",
+      "minProperties": 19,
+      "additionalProperties": false,
+
+      "properties": {
+        "HOM_VAR__HOM_REF": {"type": "number"},
+        "HOM_VAR__NO_CALL": {"type": "number"},
+        "HOM_REF__UNAVAILABLE": {"type": "number"},
+        "HOM_VAR__HOM_VAR": {"type": "number"},
+        "HOM_REF__HOM_REF": {"type": "number"},
+        "HOM_REF__HET": {"type": "number"},
+        "HOM_REF__NO_CALL": {"type": "number"},
+        "HOM_REF__HOM_VAR": {"type": "number"},
+        "HET__HET": {"type": "number"},
+        "HET__HOM_VAR": {"type": "number"},
+        "HET__HOM_REF": {"type": "number"},
+        "HET__NO_CALL": {"type": "number"},
+        "HET__UNAVAILABLE": {"type": "number"},
+        "Mismatching_Alleles__Mismatching_Alleles": {"type": "number"},
+        "HOM_REF__MIXED": {"type": "number"},
+        "HOM_VAR__HET": {"type": "number"},
+        "HOM_VAR__UNAVAILABLE": {"type": "number"},
+        "HOM_VAR__MIXED": {"type": "number"},
+        "HET__MIXED": {"type": "number"}
+      }
+    },
+
+    "genotypeSummarySample": {
+      "type": "object",
+      "minProperties": 3,
+      "additionalProperties": false,
+
+      "properties": {
+        "Non-Reference_Discrepancy": {"type": "number"},
+        "Non-Reference_Sensitivity": {"type": "number"},
+        "Overall_Genotype_Concordance": {"type": "number"}
+      }
+    },
+
+    "compProportionsSample": {
+      "type": "object",
+      "minProperties": 19,
+      "additionalProperties": false,
+
+      "properties": {
+        "HOM_VAR__HOM_REF": {"type": "number"},
+        "MIXED__HOM_VAR": {"type": "number"},
+        "HOM_VAR__HOM_VAR": {"type": "number"},
+        "HOM_REF__HOM_REF": {"type": "number"},
+        "NO_CALL__HET": {"type": "number"},
+        "MIXED__HOM_REF": {"type": "number"},
+        "HOM_REF__HET": {"type": "number"},
+        "UNAVAILABLE__HOM_REF": {"type": "number"},
+        "HOM_REF__HOM_VAR": {"type": "number"},
+        "HET__HET": {"type": "number"},
+        "HET__HOM_VAR": {"type": "number"},
+        "HET__HOM_REF": {"type": "number"},
+        "UNAVAILABLE__HOM_VAR": {"type": "number"},
+        "MIXED__HET": {"type": "number"},
+        "NO_CALL__HOM_REF": {"type": "number"},
+        "Mismatching_Alleles__Mismatching_Alleles": {"type": "number"},
+        "NO_CALL__HOM_VAR": {"type": "number"},
+        "UNAVAILABLE__HET": {"type": "number"},
+        "HOM_VAR__HET": {"type": "number"}
+      }
+    },
+
+    "concordancyCountsSample": {
+      "type": "object",
+      "minProperties": 27,
+      "additionalProperties": false,
+
+      "properties": {
+        "HOM_VAR__HOM_REF": {"type": "integer"},
+        "MIXED__HOM_VAR": {"type": "integer"},
+        "HOM_VAR__NO_CALL": {"type": "integer"},
+        "HOM_REF__UNAVAILABLE": {"type": "integer"},
+        "HET__UNAVAILABLE": {"type": "integer"},
+        "HOM_VAR__HOM_VAR": {"type": "integer"},
+        "HOM_REF__HOM_REF": {"type": "integer"},
+        "NO_CALL__HET": {"type": "integer"},
+        "MIXED__HOM_REF": {"type": "integer"},
+        "MIXED__MIXED": {"type": "integer"},
+        "HOM_REF__HET": {"type": "integer"},
+        "HOM_REF__NO_CALL": {"type": "integer"},
+        "UNAVAILABLE__HOM_REF": {"type": "integer"},
+        "HOM_REF__HOM_VAR": {"type": "integer"},
+        "HET__HET": {"type": "integer"},
+        "UNAVAILABLE__UNAVAILABLE": {"type": "integer"},
+        "HET__HOM_VAR": {"type": "integer"},
+        "HET__HOM_REF": {"type": "integer"},
+        "UNAVAILABLE__MIXED": {"type": "integer"},
+        "HET__NO_CALL": {"type": "integer"},
+        "UNAVAILABLE__NO_CALL": {"type": "integer"},
+        "NO_CALL__NO_CALL": {"type": "integer"},
+        "UNAVAILABLE__HOM_VAR": {"type": "integer"},
+        "MIXED__HET": {"type": "integer"},
+        "NO_CALL__HOM_REF": {"type": "integer"},
+        "Mismatching_Alleles__Mismatching_Alleles": {"type": "integer"},
+        "HOM_REF__MIXED": {"type": "integer"},
+        "NO_CALL__MIXED": {"type": "integer"},
+        "NO_CALL__HOM_VAR": {"type": "integer"},
+        "UNAVAILABLE__HET": {"type": "integer"},
+        "HOM_VAR__HET": {"type": "integer"},
+        "HOM_VAR__UNAVAILABLE": {"type": "integer"},
+        "HOM_VAR__MIXED": {"type": "integer"},
+        "MIXED__UNAVAILABLE": {"type": "integer"},
+        "NO_CALL__UNAVAILABLE": {"type": "integer"},
+        "MIXED__NO_CALL": {"type": "integer"},
+        "HET__MIXED": {"type": "integer"}
+
+      }
+    }
+  }
+}

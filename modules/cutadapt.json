@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Sequence statistics from a Cutadapt run (part of the Flexiprep pipeline).",
+  "type": "object",
+  "minProperties": 10,
+  "additionalProperties": false,
+
+  "properties": {
+
+    "num_reads_affected": { "type": "integer" },
+    "num_reads_input": { "type": "integer" },
+    "num_reads_with_adapters": { "type": "integer" },
+    "num_reads_output": { "type": "integer" },
+    "num_reads_discarded_too_short": { "type": "integer" },
+    "num_reads_discarded_too_long": { "type": "integer" },
+    "num_reads_discarded_many_n": { "type": "integer" },
+    "num_bases_input": { "type": "integer" },
+    "num_bases_output": { "type": "integer" },
+
+    "adapters": {
+      "description": "Adapters found in the library",
+      "type": "object",
+
+      "additionalProperties": {
+        "type": "object",
+        "minProperties": 2,
+        "additionalProperties": false,
+
+        "properties": {
+          "sequence": { "type": "string" },
+          "stats": {
+            "description": "Statistics for this adapter, with count and histogram",
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": false,
+
+            "properties": {
+              "count": {
+                "description": "How many times the adapter is clipped.",
+                "type": "integer"
+              },
+              "histogram": {
+                "description": "Histogram of clipped bases from either 3p or 5p end",
+                "type": "object",
+
+                "patternProperties": {
+                  "^[3p|5p]$": { "type": "object" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

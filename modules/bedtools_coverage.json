@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Information about coverage, 'bedtools coverage -d' is run for this.",
+  "type": "object",
+  "required": [ "coverage" ],
+  "additionalProperties": false,
+
+  "properties": {
+    "coverage": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "minProperties": 12,
+        "additionalProperties": false,
+
+        "properties": {
+          "total": { "type": "number" },
+          "mean": { "type": "number" },
+          "median": { "type": "number" },
+          "max": { "type": "number" },
+          "horizontal": { "type": "number" },
+          "width": { "type": "number" },
+          "width_nonzero": { "type": "number" }
+        },
+        "patternProperties": {
+          "^frac_min_[1-5]0x$": { "type": "number" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Results from Variant Effect Predictor.",
+  "type": "object",
+  "required": [
+    "VEP_run_statistics",
+    "General_statistics",
+    "Consequences_(all)",
+    "Consequences_(most_severe)",
+    "Coding_consequences",
+    "Variant_classes",
+    "Position_in_protein",
+    "PolyPhen_summary",
+    "SIFT_summary",
+    "Variants_by_chromosome"
+  ],
+  "additionalProperties": false,
+
+  "properties": {
+    "VEP_run_statistics": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": false,
+      "properties": {
+        "VEP_version_(API)": { "type": ["string", "number"] },
+        "Start_time": { "type": ["string", "null"] },
+        "Output_file": { "type": ["string", "null"] },
+        "Cache/Database": { "type": ["string", "number"] },
+        "Run_time": { "type": ["string", "null"] },
+        "Input_file_(format)": { "type": ["string", "null"] },
+        "Command_line_options": { "type": ["string", "null"] },
+        "Species": { "type": ["string", "null"] },
+        "End_time": { "type": ["string", "null"] }
+      }
+    },
+    "General_statistics": {
+      "type": "object",
+      "minProperties": 8,
+      "additionalProperties": false,
+      "properties": {
+        "Novel_/_existing_variants": { "type": ["string", "number", "null"] },
+        "Overlapped_genes": { "type": "number" },
+        "Variants_processed": { "type": "number" },
+        "Lines_of_output_written": { "type": "number" },
+        "Lines_of_input_read": { "type": "number" },
+        "Variants_remaining_after_filtering": { "type": "number" },
+        "Overlapped_transcripts": { "type": "number" },
+        "Overlapped_regulatory_features":{ "type": "number" }
+      }
+    },
+    "Consequences_(all)": {
+      "type": "object",
+      "properties": {
+        "": { "type": "string" }
+      },
+      "additionalProperties": { "type": "number" }
+    },
+    "Consequences_(most_severe)": {
+      "type": "object",
+      "properties": {
+        "": { "type": "string" }
+      },
+      "additionalProperties": { "type": "number" }
+    },
+    "Coding_consequences": {
+      "type": "object",
+      "properties": {
+        "": { "type": "string" }
+      },
+      "additionalProperties": { "type": "number" }
+    },
+    "Variant_classes": {
+      "type": "object",
+      "properties": {
+        "": { "type": "string" }
+      },
+      "additionalProperties": { "type": "number" }
+    },
+    "Position_in_protein": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "\\d+-\\d+%": { "type": "number" }
+      }
+    },
+    "PolyPhen_summary": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": false,
+      "properties": {
+        "benign": { "type": "integer" },
+        "possibly_damaging": { "type": "integer" },
+        "probably_damaging": { "type": "integer" },
+        "unknown": { "type": "integer" }
+      }
+    },
+    "SIFT_summary": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": false,
+      "properties": {
+        "deleterious": { "type": "integer" },
+        "deleterious_-_low_confidence": { "type": "integer" },
+        "tolerated": { "type": "integer" },
+        "tolerated_-_low_confidence": { "type": "integer" }
+      }
+    },
+    "Variants_by_chromosome": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\d+|X|Y|MT$": { "type": "number" }
+      }
+    }
+  },
+  "patternProperties": {
+    "^Distribution_of_variants_on_chromosome_(\\d+|X|Y|MT)$": {
+      "type": "object",
+      "minItems": 1,
+      "additionalProperties": false,
+      "properties": {
+        "": { "type": "string" }
+      },
+      "patternProperties": {
+        "^\\d+$": { "type": "number" }
+      }
+    }
+  }
+}

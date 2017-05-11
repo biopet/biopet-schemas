@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics gathered by Picard's MeanQualityByCycle tool",
+  "type": "object",
+  "required": [ "CYCLE", "MEAN_QUALITY" ],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "CYCLE": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "MEAN_QUALITY": {
+      "type": "array",
+      "items": { "type": "number" }
+    }
+  }
+}
+

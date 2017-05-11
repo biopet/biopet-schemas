@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Statistics for base-quality trimming, based on sickle results.",
+  "type": "object",
+  "required": [ "num_reads_kept", "num_reads_discarded_total" ],
+  "additionalProperties": false,
+
+  "properties": {
+    "num_reads_kept": { "type": "integer" },
+    "num_reads_discarded_total": { "type": "integer" },
+    "num_reads_discarded_both": { "type": "integer" }
+  },
+  "patternProperties": {
+    "^num_reads_kept_R[12]$": { "type": "integer" },
+    "^num_reads_discarded_R[12]$": { "type": "integer" }
+  }
+}
+

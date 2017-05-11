@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Results from the CNV detection tool XHMM, counts of deletions and duplications found.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [ "DEL", "DUP"],
+    "additionalProperties": false,
+    "properties": {
+      "DEL": { "type": "integer" },
+      "DUP": { "type": "integer" }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Results from a taxonomic classifier, it is a format used by Kraken and in Biopet output both from Centrifuge and Kraken is converted to this representation.",
+  "type": "object",
+  "required": [ "classified", "unclassified" ],
+  "additionalProperties": false,
+
+  "properties": {
+    "classified": { "$ref": "#/definitions/assignmentsToTaxon"},
+    "unclassified": { "$ref": "#/definitions/unclassified"}
+  },
+
+  "definitions": {
+    "assignmentsToTaxon": {
+      "type": "object",
+      "minProperties": 7,
+      "additionalProperties": false,
+
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/assignmentsToTaxon"}
+        },
+        "name": { "type": "string" },
+        "count": { "type": "integer" },
+        "taxid": { "type": "integer" },
+        "size": { "type": "integer" },
+        "cladelevel": { "type": "integer" },
+        "taxonrank": {
+          "type": "string",
+          "enum": [ "K", "P", "C", "O", "F", "G", "S", "D", "-"]
+        }
+      }
+    },
+    "unclassified": {
+      "type": "object",
+      "minProperties": 7,
+      "additionalProperties": false,
+
+      "properties": {
+        "children": { "enum": [[]] },
+        "name": { "enum": ["unclassified"] },
+        "count": { "type": "integer" },
+        "taxid": { "maximum": 0 },
+        "size": { "type": "integer" },
+        "cladelevel": { "maximum": 0 },
+        "taxonrank": { "enum": ["U"] }
+      }
+    }
+  }  
+}

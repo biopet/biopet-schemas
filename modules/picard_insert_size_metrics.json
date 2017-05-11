@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Metrics about library's insert size, Picard's CollectInsertSizeMetrics is used.",
+  "type": "object",
+  "required": [ "metrics", "histogram" ],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "metrics": {
+
+      "type": "object",
+      "minProperties": 18,
+      "additionalProperties": false,
+
+      "properties": {
+        "MAX_INSERT_SIZE": { "type": "integer" },
+        "MEAN_INSERT_SIZE": { "type": "number" },
+        "MEDIAN_ABSOLUTE_DEVIATION": { "type": "number" },
+        "MEDIAN_INSERT_SIZE": { "type": "number" },
+        "MIN_INSERT_SIZE": { "type": "integer" },
+        "PAIR_ORIENTATION": { "type": "string" },
+        "READ_PAIRS": { "type": "integer" },
+        "STANDARD_DEVIATION": { "type": "number" },
+        "WIDTH_OF_99_PERCENT": { "type": "integer" }
+      },
+      "patternProperties": {
+        "^WIDTH_OF_[1-9]0_PERCENT$": { "type": "integer" }
+      }
+
+    },
+    "histogram": {
+      "type": "object",
+      "required": [ "All_Reads.fr_count", "insert_size"],
+      "additionalProperties": false,
+
+      "properties": {
+        "All_Reads.fr_count": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "insert_size": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

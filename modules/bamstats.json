@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Alignment statistics gathered by Biopet's BamStats class.",
+  "type": "object",
+  "minProperties": 8,
+  "additionalProperties": false,
+
+  "properties": {
+    "mapping_quality": { "$ref": "#/definitions/distribution" },
+    "insert_size": { "$ref": "#/definitions/distribution" },
+    "clipping": { "$ref": "#/definitions/distribution" },
+    "left_clipping": { "$ref": "#/definitions/distribution" },
+    "right_clipping": { "$ref": "#/definitions/distribution" },
+    "5_prime_clipping": { "$ref": "#/definitions/distribution" },
+    "3_prime_clipping": { "$ref": "#/definitions/distribution" },
+
+    "flagstats": {
+      "type": "object",
+      "minProperties": 28,
+      "additionalProperties": false,
+
+      "properties": {
+
+        "All": { "type": "integer" },
+        "Duplicates": { "type": "integer" },
+        "First inverted, second read inverted": { "type": "integer" },
+        "First inverted, second read normal": { "type": "integer" },
+        "First normal, second read inverted (paired end orientation)": { "type": "integer" },
+        "First normal, second read normal": { "type": "integer" },
+        "FirstOfPair": { "type": "integer" },
+        "Mapped": { "type": "integer" },
+        "Mate in same strand": { "type": "integer" },
+        "Mate on other chr": { "type": "integer" },
+        "MateNegativeStrand": { "type": "integer" },
+        "MateUnmapped": { "type": "integer" },
+        "NotPrimaryAlignment": { "type": "integer" },
+        "ProperPair": { "type": "integer" },
+        "ReadFailsVendorQualityCheck": { "type": "integer" },
+        "ReadNegativeStrand": { "type": "integer" },
+        "ReadPaired": { "type": "integer" },
+        "SecondOfPair": { "type": "integer" },
+        "SecondaryOrSupplementary": { "type": "integer" },
+        "SupplementaryAlignment": { "type": "integer" },
+
+        "cross_counts": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "integer" }
+          }
+        }
+      },
+
+      "patternProperties": {
+        "^MAPQ>[1-6]?0$": { "type": "integer" }
+      }
+    }
+  },
+
+  "definitions": {
+
+    "distribution": {
+      "type": "object",
+      "required": [ "general", "histogram" ],
+      "additionalProperties": false,
+
+      "properties": {
+        "general": {
+          "type": "object",
+          "minProperties": 5,
+          "additionalProperties": false,
+
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "mean": { "type": "number" },
+            "median": { "type": "number" },
+            "modal":  { "type": "number" }
+          }
+        },
+        "histogram": {
+          "type": "object",
+          "minProperties": 2,
+          "additionalProperties": false,
+
+          "properties": {
+            "counts": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "values": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
