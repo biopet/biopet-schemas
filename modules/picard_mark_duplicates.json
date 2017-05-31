@@ -3,7 +3,6 @@
   "description": "Metrics reported when the alignment is checked for duplicate reads, Picard's MarkDuplicates tool is used.",
   "type": "object",
   "required": [
-    "ESTIMATED_LIBRARY_SIZE",
     "LIBRARY",
     "PERCENT_DUPLICATION",
     "READ_PAIRS_EXAMINED",
@@ -14,11 +13,21 @@
     "UNPAIRED_READS_EXAMINED",
     "UNPAIRED_READ_DUPLICATES"
   ],
-  "additionalProperties": false,
+
+  "anyOf": [
+    { "maxProperties": 9,
+      "properties": {
+        "READ_PAIRS_EXAMINED": { "maximum": 0 }
+      }},
+    { "required": [ "ESTIMATED_LIBRARY_SIZE" ],
+      "maxProperties": 10,
+      "properties": {
+        "ESTIMATED_LIBRARY_SIZE": { "type": "integer" }
+      }}
+  ],
 
   "properties": {
 
-    "ESTIMATED_LIBRARY_SIZE": { "type": "integer" },
     "LIBRARY": { "type": "string" },
     "PERCENT_DUPLICATION": { "type": "number" },
     "READ_PAIRS_EXAMINED": { "type": "integer" },
