@@ -4,7 +4,6 @@
   "type": "object",
   "required": [
     "LIBRARY",
-    "PERCENT_DUPLICATION",
     "READ_PAIRS_EXAMINED",
     "READ_PAIR_DUPLICATES",
     "READ_PAIR_OPTICAL_DUPLICATES",
@@ -17,19 +16,19 @@
   "anyOf": [
     { "maxProperties": 9,
       "properties": {
-        "READ_PAIRS_EXAMINED": { "maximum": 0 }
+        "READ_PAIRS_EXAMINED": { "maximum": 580 }
       }},
-    { "required": [ "ESTIMATED_LIBRARY_SIZE" ],
+    { "required": [ "ESTIMATED_LIBRARY_SIZE", "PERCENT_DUPLICATION" ],
       "maxProperties": 10,
       "properties": {
-        "ESTIMATED_LIBRARY_SIZE": { "type": "integer" }
+        "ESTIMATED_LIBRARY_SIZE": { "type": "integer" },
+        "PERCENT_DUPLICATION": { "type": "number" }
       }}
   ],
 
   "properties": {
 
     "LIBRARY": { "type": "string" },
-    "PERCENT_DUPLICATION": { "type": "number" },
     "READ_PAIRS_EXAMINED": { "type": "integer" },
     "READ_PAIR_DUPLICATES": { "type": "integer" },
     "READ_PAIR_OPTICAL_DUPLICATES": { "type": "integer" },
