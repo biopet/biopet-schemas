@@ -5,9 +5,21 @@
   "minProperties": 8,
   "additionalProperties": false,
 
+  "anyOf": [
+    { "properties": {
+      "flagstats": {
+        "properties" : {
+          "ReadPaired": { "maximum": 0 }
+        }
+      }}},
+    { "properties": {
+      "insert_size": { "$ref": "#/definitions/distribution" }
+    }}
+  ],
+
   "properties": {
+    "insert_size": {},
     "mapping_quality": { "$ref": "#/definitions/distribution" },
-    "insert_size": { "$ref": "#/definitions/distribution" },
     "clipping": { "$ref": "#/definitions/distribution" },
     "left_clipping": { "$ref": "#/definitions/distribution" },
     "right_clipping": { "$ref": "#/definitions/distribution" },
