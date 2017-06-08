@@ -37,8 +37,7 @@
     },
     "READS_USED": {
       "type": "array",
-      "items": { "type": "integer" },
-      "required": false
+      "items": { "type": "integer" }
     },
     "READ_GROUP": {
       "type": "array",
