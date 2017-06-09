@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "GC bias statistics gather by the Picard CollectGcBiasMetrics tool",
   "type": "object",
-  "minProperties": 11,
+  "minProperties": 10,
   "additionalProperties": false,
 
   "properties": {
