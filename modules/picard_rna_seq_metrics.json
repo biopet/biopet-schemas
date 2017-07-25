@@ -14,7 +14,7 @@
       "required": [ "CODING_BASES", "CORRECT_STRAND_READS", "IGNORED_READS", "INCORRECT_STRAND_READS",
         "INTERGENIC_BASES", "INTRONIC_BASES", "MEDIAN_3PRIME_BIAS", "MEDIAN_5PRIME_BIAS",
         "MEDIAN_5PRIME_TO_3PRIME_BIAS", "PF_ALIGNED_BASES", "PF_BASES", "UTR_BASES" ],
-      "additionalProperties": false,
+      "additionalProperties": true,
 
       "properties": {
         "CODING_BASES": { "type": "integer" },
@@ -38,7 +38,12 @@
         "PF_ALIGNED_BASES": { "type": "integer" },
         "PF_BASES": { "type": "integer" },
         "RIBOSOMAL_BASES": { "type": ["integer", "string"] },
-        "UTR_BASES": { "type": "integer" }
+        "UTR_BASES": { "type": "integer" },
+        "NUM_R1_TRANSCRIPT_STRAND_READS": { "type": "integer" },
+        "NUM_R2_TRANSCRIPT_STRAND_READS": { "type": "integer" },
+        "NUM_UNEXPLAINED_READS": { "type": "integer" },
+        "PCT_R1_TRANSCRIPT_STRAND_READS": { "type": "number" },
+        "PCT_R2_TRANSCRIPT_STRAND_READS": { "type": "number" }
       }
     },
 
