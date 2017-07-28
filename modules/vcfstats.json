@@ -20,7 +20,7 @@
   "definitions": {
     "statistics": {
       "type": "object",
-      "required": [ "genotype", "info", "sample_distributions"],
+      "required": [ "genotype", "info", "sample_distributions", "sample_compare"],
       "additionalProperties": false,
 
       "properties": {
