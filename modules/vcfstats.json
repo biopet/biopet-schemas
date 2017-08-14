@@ -147,33 +147,6 @@
             "Variant": { "$ref": "#/definitions/counts" }
           }
         }
-      }
-    },
-    "counts": {
-      "type": "object",
-      "required": [ "value", "count" ],
-      "additionalProperties": false,
-
-      "properties": {
-        "value": {
-          "type": "array",
-          "items": { "type": [ "string", "integer" ] }
-        },
-        "count": {
-          "type": "array",
-          "items": { "type": "integer" }
-        }
-      }
-    },
-    "countsPerSample": {
-      "type": "object",
-      "minProperties": 1,
-      "additionalProperties": {
-        "type": "object",
-
-        "patternProperties": {
-          "^[0-9]{1,2}$": { "type": "integer" }
-        }
       },
       "sample_compare": {
         "type": "object",
@@ -202,6 +175,33 @@
           }
         }
 
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [ "value", "count" ],
+      "additionalProperties": false,
+
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": { "type": [ "string", "integer" ] }
+        },
+        "count": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    },
+    "countsPerSample": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+
+        "patternProperties": {
+          "^[0-9]{1,2}$": { "type": "integer" }
+        }
       }
     }
   }
