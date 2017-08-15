@@ -10,7 +10,7 @@
     "BAIT_DESIGN_EFFICIENCY": { "type": "integer" },
     "BAIT_SET": { "type": "string" },
     "BAIT_TERRITORY": { "type": "integer" },
-    "FOLD_80_BASE_PENALTY": { "type": "number" },
+    "FOLD_80_BASE_PENALTY": { "type": ["integer", "number", "string"] },
     "FOLD_ENRICHMENT": { "type": "number" },
     "GC_DROPOUT": { "type": "number" },
     "GENOME_SIZE": { "type": "integer" },
